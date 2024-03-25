@@ -31,6 +31,10 @@ class TestCurrency(TestCase):
 
 
 class TestOneInOut(TestCase):
+    def test_is_outcome(self):
+        field = OneInOut._meta.get_field('is_outcome').default
+        self.assertTrue(field)
+
     def test_owner(self):
         field = OneInOut._meta.get_field('owner')
         to_class = field.related_model

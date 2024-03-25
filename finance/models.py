@@ -21,6 +21,7 @@ class OneInOut(models.Model):
     didn't add - media link, user
     When user is deleted data should remain in final version
     """
+    is_outcome = models.BooleanField(default=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     value = models.DecimalField(max_digits=17, decimal_places=2)
