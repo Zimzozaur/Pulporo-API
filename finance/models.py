@@ -33,7 +33,8 @@ class OneInOut(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     last_modification = models.DateTimeField(auto_now=True)
 
-
+    class Meta:
+        ordering = ['-date', '-value']
 
 
 
