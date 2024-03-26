@@ -8,6 +8,34 @@ from .views import ListIOs
 
 
 # ---------- Views ----------
+class UpdateIOViewTest(TestCase):
+    def setUp(self):
+        c = Currency.objects.create()
+        d = datetime.date.today()
+        v = 100
+        t = 'T'
+        o = User.objects.create()
+        self.one_io = OneIO.objects.create(title=t, value=v, date=d, currency=c, owner=o)
+
+    def test_post_valid(self):
+        title = 'Fresh new title'
+        value = 200
+        url = reverse('update-io', kwargs={'pk': self.one_io.pk})
+        response = self.client.post(url, data={'title': title, 'value': value})
+        obj = response.context['object']
+        self.assertEqual(title, obj.title)
+        self.assertEqual(value, obj.value)
+
+    def test_post_invalid(self):
+        url = reverse('update-io', kwargs={'pk': self.one_io.pk})
+        with self.assertRaises(ValueError):
+            self.client.post(url, data={'title': 'T', 'value': -100})
+        with self.assertRaises(ValueError):
+            self.client.post(url, data={'title': '', 'value': 100})  # title is none
+        with self.assertRaises(ValueError):
+            self.client.post(url, data={'title': '   ', 'value': 100})  # title is len 0
+
+
 class ListIOsViewTest(TestCase):
     fixtures = ['ReadIO.json']
     this_month = datetime.date.today().replace(day=1)

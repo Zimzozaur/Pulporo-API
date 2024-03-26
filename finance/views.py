@@ -2,7 +2,9 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils import timezone
+from django.urls import reverse_lazy
 from .models import OneIO
+from .forms import UpdateIOForm
 """
 We need a view for to display all: 
 (by default display this month)
@@ -39,6 +41,14 @@ class DetailIO(DetailView):
         return queryset.get(pk=self.kwargs.get('pk'))
 
 
+class UpdateIO(UpdateView):
+    """This has to use form to validate changed data"""
+    model = OneIO
+    form_class = UpdateIOForm
+    template_name = 'finance/one_io_detail.html'
+
+    def get_success_url(self):
+        return reverse_lazy('detail-io', {'pk': self.object.pk})
 
 
 
