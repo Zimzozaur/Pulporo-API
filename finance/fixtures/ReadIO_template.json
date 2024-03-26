@@ -1,0 +1,71 @@
+[
+  {
+    "model": "finance.oneio",
+    "fields": {
+      "is_outcome": false,
+      "title": "This month income",
+      "value": 100,
+      "date": "__CURRENT_MONTH__",
+      "owner": 1,
+      "currency": 1,
+      "future": true,
+      "cash_tag": null,
+      "company": null,
+      "notes": "This is a sample income",
+      "creation_date": "2023-02-01T00:00:00Z",
+      "last_modification": "2023-02-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "finance.oneio",
+    "fields": {
+      "is_outcome": true,
+      "title": "This month outcome",
+      "value": 50,
+      "date": "__CURRENT_MONTH__",
+      "owner": 1,
+      "currency": 1,
+      "future": true,
+      "cash_tag": null,
+      "company": null,
+      "notes": "This is a sample income",
+      "creation_date": "2023-02-01T00:00:00Z",
+      "last_modification": "2023-02-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "finance.oneio",
+    "fields": {
+      "is_outcome": false,
+      "title": "Last month income",
+      "value": 200,
+      "date": "__LAST_MONTH__",
+      "owner": 1,
+      "currency": 1,
+      "future": true,
+      "cash_tag": null,
+      "company": null,
+      "notes": "This is a sample income",
+      "creation_date": "2023-02-01T00:00:00Z",
+      "last_modification": "2023-02-01T00:00:00Z"
+
+    }
+  },
+  {
+    "model": "finance.oneio",
+    "fields": {
+      "is_outcome": true,
+      "title": "Last month outcome",
+      "value": 90,
+      "date": "__LAST_MONTH__",
+      "owner": 1,
+      "currency": 1,
+      "future": true,
+      "cash_tag": null,
+      "company": null,
+      "notes": "This is a sample income",
+      "creation_date": "2023-02-01T00:00:00Z",
+      "last_modification": "2023-02-01T00:00:00Z"
+    }
+  }
+]
