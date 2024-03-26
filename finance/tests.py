@@ -1,14 +1,14 @@
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 from django.db.models import PROTECT, CASCADE, SET_NULL
+from django.urls import reverse
 import datetime
 from .models import Company, CashTag, Currency, OneIO
-from .views import ReadIO
-
+from .views import ListIOs
 
 
 # ---------- Views ----------
-class ReadIOView(TestCase):
+class ListIOsViewTest(TestCase):
     fixtures = ['ReadIO.json']
     this_month = datetime.date.today().replace(day=1)
     last_month = this_month - datetime.timedelta(days=1)
@@ -24,20 +24,20 @@ class ReadIOView(TestCase):
 
         with open(template_fixture, 'r') as f:
             f_data = f.read()
-            f_data = f_data.replace("__CURRENT_MONTH__", str(ReadIOView.this_month))
-            f_data = f_data.replace("__LAST_MONTH__", str(ReadIOView.last_month))
+            f_data = f_data.replace("__CURRENT_MONTH__", str(ListIOsViewTest.this_month))
+            f_data = f_data.replace("__LAST_MONTH__", str(ListIOsViewTest.last_month))
         with open(fixture_path, 'w') as f:
             f.write(f_data)
         super().setUpClass()
 
     def setUp(self):
         self.r = RequestFactory()
-        self.this = ReadIOView.this_month
-        self.last = ReadIOView.last_month
+        self.this = ListIOsViewTest.this_month
+        self.last = ListIOsViewTest.last_month
 
     def test_this_month_outcome(self):
         r = self.r.get('/')
-        view = ReadIO()
+        view = ListIOs()
         view.request = r
         qs = view.get_queryset()
         self.assertEqual(50, qs[0].value)
@@ -48,7 +48,7 @@ class ReadIOView(TestCase):
             'chosen_month': self.this.month,
             'is_outcome': False
         })
-        view = ReadIO()
+        view = ListIOs()
         view.request = r
         qs = view.get_queryset()
         self.assertEqual(100, qs[0].value)
@@ -59,7 +59,7 @@ class ReadIOView(TestCase):
             'chosen_month': self.last.month,
             'is_outcome': True
         })
-        view = ReadIO()
+        view = ListIOs()
         view.request = r
         qs = view.get_queryset()
         self.assertEqual(90, qs[0].value)
@@ -70,10 +70,26 @@ class ReadIOView(TestCase):
             'chosen_month': self.last.month,
             'is_outcome': False
         })
-        view = ReadIO()
+        view = ListIOs()
         view.request = r
         qs = view.get_queryset()
         self.assertEqual(200, qs[0].value)
+
+
+class DetailIOTest(TestCase):
+    def setUp(self):
+        c = Currency.objects.create()
+        d = datetime.date.today()
+        v = 100
+        t = 'T'
+        o = User.objects.create()
+        self.one_io = OneIO.objects.create(title=t, value=v, date=d, currency=c, owner=o)
+
+    def test_get_object(self):
+        url = reverse('detail-io', kwargs={'pk': self.one_io.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.context['object'], self.one_io)
+
 
 
 # ---------- MODELS ----------

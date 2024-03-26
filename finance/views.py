@@ -13,7 +13,7 @@ We need a view for to display all:
 """
 
 
-class ReadIO(ListView):
+class ListIOs(ListView):
     model = OneIO
 
     def get_queryset(self):
@@ -27,5 +27,18 @@ class ReadIO(ListView):
         year = timezone.now().year
         month = timezone.now().month
         return queryset.filter(date__year=year, date__month=month, is_outcome=True)
+
+
+class DetailIO(DetailView):
+    model = OneIO
+
+    def get_object(self, queryset=None):
+        if not queryset:
+            queryset = self.get_queryset()
+
+        return queryset.get(pk=self.kwargs.get('pk'))
+
+
+
 
 

@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import ReadIO
+from .views import ListIOs, DetailIO
 
 
 urlpatterns = [
-    path('', ReadIO.as_view(), name='read-io'),
+    path('', ListIOs.as_view(), name='list-io'),
+    path('deatil/<int:pk>', DetailIO.as_view(), name='detail-io')
 ]
