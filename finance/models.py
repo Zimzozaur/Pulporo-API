@@ -16,7 +16,7 @@ class Currency(models.Model):
     iso_code = models.CharField(max_length=3)
 
 
-class OneInOut(models.Model):
+class OneIO(models.Model):
     """
     didn't add - media link, user
     When user is deleted data should remain in final version
