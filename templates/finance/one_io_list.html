@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{% url 'create-io' %}">Create</a>
+<table>
+<thead>
+    <tr>
+        <th>Title</th>
+        <th>Value</th>
+        <th>Date</th>
+    </tr>
+</thead>
+<tbody>
+    {% for obj in object_list %}
+        <tr>
+            <td style="width: 100px; text-align: center;">
+                <a href="{% url 'detail-io' pk=obj.pk %}">{{ obj.title }}</a>
+            </td>
+            <td style="width: 100px; text-align: center;">{{ obj.value }}</td>
+            <td style="width: 100px; text-align: center;">{{ obj.date|date:'d' }}</td>
+        </tr>
+    {% endfor %}
+</tbody>
+        </table>
+{% endblock %}
+
