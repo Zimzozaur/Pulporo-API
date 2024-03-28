@@ -5,6 +5,38 @@ from django.urls import reverse
 import datetime
 from .models import Company, CashTag, Currency, OneIO
 from .views import ListIOs
+from .forms import UpdateIOForm
+
+
+# ---------- Forms ----------
+class UpdateIOFormTest(TestCase):
+    def setUp(self):
+        d = datetime.date.today()
+        v = 100
+        t = 'T'
+        c = Company.objects.create()
+        ct = CashTag.objects.create()
+        self.form_data = {'title': t, 'value': v, 'date': d, 'company': c, 'cash_tag': ct}
+
+    def test_negative_value(self):
+        self.form_data['value'] = -100
+        form = UpdateIOForm(data=self.form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_post_empty_title(self):
+        self.form_data['title'] = ''
+        form = UpdateIOForm(data=self.form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_post_negative_long_empty_title(self):
+        self.form_data['title'] = '         '
+        form = UpdateIOForm(data=self.form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_post_too_long_title(self):
+        self.form_data['title'] = 'a' * 51
+        form = UpdateIOForm(data=self.form_data)
+        self.assertFalse(form.is_valid())
 
 
 # ---------- Views ----------
@@ -16,6 +48,7 @@ class UpdateIOViewTest(TestCase):
         t = 'T'
         o = User.objects.create()
         self.one_io = OneIO.objects.create(title=t, value=v, date=d, currency=c, owner=o)
+        self.url = reverse('update-io', kwargs={'pk': self.one_io.pk})
 
     def test_post_valid(self):
         title = 'Fresh new title'
@@ -25,15 +58,6 @@ class UpdateIOViewTest(TestCase):
         obj = response.context['object']
         self.assertEqual(title, obj.title)
         self.assertEqual(value, obj.value)
-
-    def test_post_invalid(self):
-        url = reverse('update-io', kwargs={'pk': self.one_io.pk})
-        with self.assertRaises(ValueError):
-            self.client.post(url, data={'title': 'T', 'value': -100})
-        with self.assertRaises(ValueError):
-            self.client.post(url, data={'title': '', 'value': 100})  # title is none
-        with self.assertRaises(ValueError):
-            self.client.post(url, data={'title': '   ', 'value': 100})  # title is len 0
 
 
 class ListIOsViewTest(TestCase):
