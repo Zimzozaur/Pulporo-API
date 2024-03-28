@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 from .models import OneIO
 
 
@@ -7,13 +7,15 @@ class UpdateIOForm(ModelForm):
         model = OneIO
         fields = ['title', 'value', 'date', 'future', 'cash_tag', 'company', 'notes']
 
-    def clean(self):
-        cleaned = super().clean()
-        value = cleaned.get('value')
-        title = cleaned.get('title')
+    def clean_value(self):
+        value = self.cleaned_data.get('value')
         if value < 0:
-            raise ValueError('Value mast be equal or greater than 0')
-        if not title and len(title) == 0:
-            raise ValueError('Title has to be at list 1 non-space character')
+            raise ValidationError('Value mast be equal or greater than 0')
+        return value
 
-        return cleaned
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+        if not title and len(title) == 0 or len(title) == 51:
+            raise ValidationError('Title has to be between 1 and 50 charts')
+        return title
+
