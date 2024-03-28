@@ -17,6 +17,7 @@ We need a view for to display all:
 
 class ListIOs(ListView):
     model = OneIO
+    template_name = 'finance/one_io_list.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -31,24 +32,36 @@ class ListIOs(ListView):
         return queryset.filter(date__year=year, date__month=month, is_outcome=True)
 
 
-class DetailIO(DetailView):
-    model = OneIO
-
-    def get_object(self, queryset=None):
-        if not queryset:
-            queryset = self.get_queryset()
-
-        return queryset.get(pk=self.kwargs.get('pk'))
-
-
-class UpdateIO(UpdateView):
-    """This has to use form to validate changed data"""
+class DetailIO(UpdateView):
     model = OneIO
     form_class = UpdateIOForm
-    template_name = 'finance/one_io_detail.html'
+    template_name = 'finance/one_io_detail_update.html'
 
     def get_success_url(self):
-        return reverse_lazy('detail-io', {'pk': self.object.pk})
+        return reverse_lazy('list-io')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['one_io'] = self.object
+        return context
+
+
+class CreateIO(CreateView):
+    model = OneIO
+    form_class = UpdateIOForm
+    template_name = 'finance/one_io_create.html'
+    success_url = reverse_lazy('list-io')
+
+
+class DeleteIO(DeleteView):
+    model = OneIO
+    success_url = reverse_lazy('list-io')
+
+    def post(self, request, *args, **kwargs):
+        selected_pks = request.POST.getlist('selected_pk')
+        OneIO.objects.filter(pk__in=selected_pks).delete()
+        return super().post(request, *args, **kwargs)
+
 
 
 
