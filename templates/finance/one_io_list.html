@@ -1,25 +1,32 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <a href="{% url 'create-io' %}">Create</a>
-<table>
+<a href="?is-outcome=False">Income</a>
+<a href="?is-outcome=True">Outcome</a>
+<a href="?year={{ prev_year }}&month={{ prev_month }}">Previous Month</a>
+<a href="?year={{ next_year }}&month={{ next_month }}">Next Month</a>
+
+    <table id="TableIO" class="tableIO display ">
 <thead>
     <tr>
         <th>Title</th>
         <th>Value</th>
         <th>Date</th>
+        <th>Outcome</th>
     </tr>
 </thead>
 <tbody>
     {% for obj in object_list %}
         <tr>
-            <td style="width: 100px; text-align: center;">
+            <td class="column">
                 <a href="{% url 'detail-io' pk=obj.pk %}">{{ obj.title }}</a>
             </td>
-            <td style="width: 100px; text-align: center;">{{ obj.value }}</td>
-            <td style="width: 100px; text-align: center;">{{ obj.date|date:'d' }}</td>
+            <td class="column">{{ obj.value }}</td>
+            <td class="column">{{ obj.date|date:'d' }}</td>
+            <td class="column">{{ obj.is_outcome }}</td>
         </tr>
     {% endfor %}
 </tbody>
-        </table>
+</table>
 {% endblock %}
-

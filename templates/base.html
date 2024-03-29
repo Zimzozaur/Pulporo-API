@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="" />
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'datatables.min.css' %}">
 
 </head>
 <body>
@@ -36,5 +37,8 @@
         {% block content %}       
         {% endblock %}
     </main>
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'datatables.min.js' %}"></script>
+    <script src="{% static 'init_datatable.js' %}"></script>
 </body>
 </html>

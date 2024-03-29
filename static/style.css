@@ -1,8 +1,15 @@
 .column {
-    width: 300px;
-    text-align: center;
+    width: 20px;
 }
 
-html {
-    background-color: antiquewhite;
+.tableIO {
+    width: 50%;
 }
+
+li {
+    display: inline-flex;
+}
+
+/*html {*/
+/*    background-color: antiquewhite;*/
+/*}*/
