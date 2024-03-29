@@ -1,14 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Hello, world!</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="" />
-  <link rel="icon" href="favicon.png">
+    <meta charset="UTF-8" />
+    <title>Hello, world!</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
 </head>
 <body>
-  {% block content %}       
-  {% endblock %}
+    <header>
+        <ul>
+            <li>Search</li>
+            <li>Pallet</li>
+            <li>Runway</li>
+            <li>Cash</li>
+            <li>Investments</li>
+            <li>Loans</li>
+            <li>User</li>
+        </ul>
+    </header>
+    <nav>
+        <ul>
+            <li>Dashboard</li>
+            <li>Ledger</li>
+            <li>Recurring</li>
+            <li>Investment</li>
+            <li>Liabilities</li>
+            <li>Reminders</li>
+            <li>Media (Photos/PDF)</li>
+        </ul>
+    </nav>
+    <main>
+        {% block content %}       
+        {% endblock %}
+    </main>
 </body>
 </html>
