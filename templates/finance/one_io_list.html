@@ -7,24 +7,24 @@
 <a href="?year={{ prev_year }}&month={{ prev_month }}">Previous Month</a>
 <a href="?year={{ next_year }}&month={{ next_month }}">Next Month</a>
 
-    <table id="TableIO" class="tableIO display ">
+    <table id="TableIO" class="display ">
 <thead>
     <tr>
         <th>Title</th>
         <th>Value</th>
         <th>Date</th>
-        <th>Outcome</th>
+        <th>Notes</th>
     </tr>
 </thead>
 <tbody>
     {% for obj in object_list %}
         <tr>
-            <td class="column">
+            <td>
                 <a href="{% url 'detail-io' pk=obj.pk %}">{{ obj.title }}</a>
             </td>
-            <td class="column">{{ obj.value }}</td>
-            <td class="column">{{ obj.date|date:'d' }}</td>
-            <td class="column">{{ obj.is_outcome }}</td>
+            <td>{% if obj.is_outcome %}-{% endif %}{{ obj.value }}</td>
+            <td style="text-align: center">{{ obj.date|date:'d' }}</td>
+            <td>{{ obj.notes }}</td>
         </tr>
     {% endfor %}
 </tbody>

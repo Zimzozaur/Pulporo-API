@@ -5,5 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         searching: true,
         colReorder: true,
         autoWidth: false,
+        fixedHeader: true,
+        columns: [{ width: '30%'}, { width: '15%'}, { width: '5%'}, null],
     });
 });
