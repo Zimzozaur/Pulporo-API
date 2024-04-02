@@ -20,6 +20,7 @@ class OneIO(models.Model):
     """
     didn't add - media link, user
     When user is deleted data should remain in final version
+    TODO: add recurring parameter
     """
     is_outcome = models.BooleanField(default=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
