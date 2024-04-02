@@ -1,15 +1,16 @@
-from django.forms import ModelForm, ValidationError, DateInput
+from django.forms import ModelForm, ValidationError, DateInput, BooleanField
 from django.contrib.auth.models import User
 from .models import OneIO, Currency
-
 
 
 class UpdateIOForm(ModelForm):
     class Meta:
         model = OneIO
-        fields = ['title', 'value', 'date', 'future', 'cash_tag', 'company', 'notes']
+        fields = ['title', 'value', 'is_outcome', 'date', 'future', 'cash_tag', 'company', 'notes']
+        is_outcome = BooleanField()
+        date = DateInput()
         widgets = {
-            'date': DateInput(attrs={'type': 'date'})  # Use DateInput widget for date field
+            'date': DateInput(attrs={'type': 'date'})
         }
 
     def __init__(self, *args, **kwargs):
@@ -17,6 +18,9 @@ class UpdateIOForm(ModelForm):
         self.fields['cash_tag'].required = False
         self.fields['company'].required = False
         self.fields['notes'].required = False
+        self.fields['is_outcome'].required = False
+        self.fields['is_outcome'].initial = True
+        self.fields['is_outcome'].label = 'Outcome'
 
     def clean_value(self):
         value = self.cleaned_data.get('value')
@@ -36,3 +40,7 @@ class UpdateIOForm(ModelForm):
         instance.currency = Currency.objects.get(pk=1)
         instance.save()
         return instance
+
+
+
+
