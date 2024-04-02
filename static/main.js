@@ -4,9 +4,15 @@ function setLedgerCookie(name, value) {
 }
 
 function setLedgerDateCookie(forward) {
-    const month = getCookie('ledger-month') * 1;
+    const month = getCookie('ledger-month');
     const year = getCookie('ledger-year') * 1;
-    const date = Boolean(month) && Boolean(year) ? new Date(year, month) : new Date()
+
+    let date = null
+    if (month === null) {
+        date = new Date();
+    } else {
+        date = new Date(year, month * 1)
+    }
 
     if (forward) {
         date.setMonth(date.getMonth() + 1);
