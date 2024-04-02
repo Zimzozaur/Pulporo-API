@@ -1,3 +1,9 @@
 .idea/
 db.sqlite3
 ReadIO.json
+static/datatables.css
+static/datatables.min.css
+static/datatables.js
+static/datatables.min.js
+static/jquery.js
+static/jquery.min.js
