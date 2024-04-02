@@ -1,8 +1,8 @@
 from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils import timezone
 from django.urls import reverse_lazy
+import datetime
 from .models import OneIO
 from .forms import UpdateIOForm
 """
@@ -21,15 +21,21 @@ class ListIOs(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        chosen_year = self.request.GET.get('chosen_year')
-        chosen_month = self.request.GET.get('chosen_month')
-        chosen_is_outcome = self.request.GET.get('is_outcome')
-        if chosen_month and chosen_month:
-            return queryset.filter(date__year=chosen_year, date__month=chosen_month, is_outcome=chosen_is_outcome)
+        year = int(self.request.COOKIES.get('ledger-year', timezone.now().year))
+        month = int(self.request.COOKIES.get('ledger-month', timezone.now().month))
 
-        year = timezone.now().year
-        month = timezone.now().month
-        return queryset.filter(date__year=year, date__month=month, is_outcome=True)
+        is_outcome = self.request.COOKIES.get('is-outcome', True)
+        if isinstance(is_outcome, str):
+            is_outcome = True if is_outcome == 'true' else False
+
+        # TODO: add recurring parameter
+        # is_one_off = self.request.COOKIES.get('is-one-off', True)
+
+        return queryset.filter(
+            date__year=year,
+            date__month=month,
+            is_outcome=is_outcome,
+        )
 
 
 class DetailIO(UpdateView):

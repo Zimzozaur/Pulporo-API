@@ -2,10 +2,12 @@
 
 {% block content %}
 <a href="{% url 'create-io' %}">Create</a>
-<a href="?is-outcome=False">Income</a>
-<a href="?is-outcome=True">Outcome</a>
-<a href="?year={{ prev_year }}&month={{ prev_month }}">Previous Month</a>
-<a href="?year={{ next_year }}&month={{ next_month }}">Next Month</a>
+<button onclick="setLedgerCookie('is-outcome', false)">Income</button>
+<button onclick="setLedgerCookie('is-outcome', true)">Outcome</button>
+<button onclick="setLedgerTodayCookie()">Today</button>
+<button onclick="setLedgerDateCookie(false)">Previous Month</button>
+<button onclick="setLedgerDateCookie(true)">Next Month</button>
+    
 
     <table id="TableIO" class="display ">
 <thead>
