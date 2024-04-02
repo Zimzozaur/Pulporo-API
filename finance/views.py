@@ -22,7 +22,9 @@ class ListIOs(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         year = int(self.request.COOKIES.get('ledger-year', timezone.now().year))
-        month = int(self.request.COOKIES.get('ledger-month', timezone.now().month))
+
+        js_month = self.request.COOKIES.get('ledger-month')
+        month = int(js_month) + 1 if js_month else timezone.now().month
 
         is_outcome = self.request.COOKIES.get('is-outcome', True)
         if isinstance(is_outcome, str):
