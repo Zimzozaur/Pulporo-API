@@ -24,11 +24,19 @@
             <td>
                 <a href="{% url 'detail-io' pk=obj.pk %}">{{ obj.title }}</a>
             </td>
-            <td>{% if obj.is_outcome %}-{% endif %}{{ obj.value }}</td>
+            <td>{% if is_outcome %}-{% endif %}{{ obj.value }}</td>
             <td style="text-align: center">{{ obj.date|date:'d' }}</td>
             <td>{{ obj.notes }}</td>
         </tr>
     {% endfor %}
 </tbody>
+    <tfoot>
+    <tr>
+        <td><strong>Total</strong></td>
+        <td><strong>{% if is_outcome %}-{% endif %}{{ total_sum }}</strong></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tfoot>
 </table>
 {% endblock %}
