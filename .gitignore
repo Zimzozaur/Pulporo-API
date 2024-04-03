@@ -7,3 +7,4 @@ static/datatables.js
 static/datatables.min.js
 static/jquery.js
 static/jquery.min.js
+node_modules/
