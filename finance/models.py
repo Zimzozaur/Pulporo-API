@@ -38,5 +38,15 @@ class OneIO(models.Model):
     class Meta:
         ordering = ['-date', '-value']
 
+# TODO: after creating recurring manager try this idea
+class MonthlyTotals(models.Model):
+    _year = models.IntegerField(editable=False, null=False)
+    _month = models.IntegerField(editable=False, null=False)
+    outcomes = models.DecimalField(max_digits=19, decimal_places=2, default=0, null=False)
+    incomes = models.DecimalField(max_digits=19, decimal_places=2, default=0, null=False)
 
+    class Meta:
+        unique_together = ('_year', '_month')
 
+    # def get_or_create(self):
+    #     if self.objects.get(_year__exact=)
