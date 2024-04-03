@@ -2,6 +2,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils import timezone
 from django.urls import reverse_lazy
+from django.db.models import Sum
 import datetime
 from .models import OneIO
 from .forms import UpdateIOForm
@@ -38,6 +39,19 @@ class ListIOs(ListView):
             date__month=month,
             is_outcome=is_outcome,
         )
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        queryset = self.get_queryset()
+        total_sum = queryset.aggregate(total=Sum('value'))['total'] or 0
+        context['total_sum'] = f'{total_sum:.2f}'
+
+        is_outcome = self.request.COOKIES.get('is-outcome', True)
+        if isinstance(is_outcome, str):
+            is_outcome = True if is_outcome == 'true' else False
+
+        context['is_outcome'] = is_outcome
+        return context
 
 
 class DetailIO(UpdateView):
