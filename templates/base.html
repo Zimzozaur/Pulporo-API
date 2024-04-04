@@ -10,36 +10,65 @@
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <link href="https://cdn.datatables.net/v/dt/dt-2.0.3/cr-2.0.0/sp-2.3.0/datatables.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.3/cr-2.0.0/sp-2.3.0/datatables.min.js"></script>
-
 </head>
-<body>
-    <header>
+<body class="body">
+<header class="top-bar">
+    <div class="top-bar-actions">
+        <input autocomplete="off" type="search" placeholder="Search 🔍" class="search-tool">
+        <a href="#">
+            
+            <div class="add-bt"><a href="{% url 'create-io' %}" class="top-bar-text">Add ➕</a></div>
+        </a>
+    </div>
+    <div class="top-bar-stats">
+        <div class="runway"><span class="top-bar-text">400 days 🏃🏿</span></div>
+        <div class="cash"><span class="top-bar-text">100K 💰</span></div>
+        <div class="investments"><span class="top-bar-text">1.7 mln 💸</span></div>
+        <div class="loans"><span class="top-bar-text">23K 🏦</span></div>
+    </div>
+    <div class="top-bar-settings">
+        <a href="#">
+            <div class="settings-bt"><span class="top-bar-text">Settings 🎨</span></div>
+        </a>
+    </div>
+</header>
+<div class="app-container">
+    <nav class="left-bar">
         <ul>
-            <li>Search</li>
-            <li>Pallet</li>
-            <li>Runway</li>
-            <li>Cash</li>
-            <li>Investments</li>
-            <li>Loans</li>
-            <li>User</li>
-        </ul>
-    </header>
-    <nav>
-        <ul>
-            <li>Dashboard</li>
-            <li>Ledger</li>
-            <li>Recurring</li>
-            <li>Investment</li>
-            <li>Liabilities</li>
-            <li>Reminders</li>
-            <li>Media (Photos/PDF)</li>
+            <li><a href="#">📊</a></li>
+            <li class="{% if request.path == '/ledger/' %}tab-active {% endif %}">
+                <a href="{% url 'ledger' %}">📖️</a>
+            </li>
+            <li><a href="#">🔁</a></li>
+            <li><a href="#">➡️</a></li>
+            <li><a href="#">⬅️</a></li>
+            <li><a href="#">🔔</a></li>
+            <li><a href="#">📦</a></li>
         </ul>
     </nav>
-    <main>
-        {% block content %}       
+    <main class="main">
+        {% block content %}
         {% endblock %}
     </main>
-    <script src="{% static 'js/init_datatable.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+</div>
+<footer class="footer">
+    <ul>
+        <li>
+            <a href="https://github.com/Zimzozaur/pulporoA1">
+                GitHub
+            </a>
+        </li>
+        <li>
+            <a href="https://twitter.com/SimonDotDev">
+                X.com
+            </a>
+        </li>
+        <li>
+            <p>
+                &copy; 2024 Pulporo. All rights reserved.
+            </p>
+        </li>
+    </ul>
+</footer>
 </body>
 </html>

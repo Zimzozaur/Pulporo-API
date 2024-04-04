@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Update One IO</h1>
-    <a href="{% url  'list-io' %}">Back to list</a>
+    <a href="{% url  'ledger' %}">Back to list</a>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
