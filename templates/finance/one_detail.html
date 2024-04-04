@@ -12,5 +12,7 @@
         {% csrf_token %}
         <button type="submit">Delete</button>
     </form>
+    <p>Last modification: {{ object.last_modification }}</p>
+    <p>Creation time: {{ object.creation_date }}</p>
 {% endblock %}
 
