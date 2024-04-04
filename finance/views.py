@@ -18,7 +18,7 @@ We need a view for to display all:
 
 class ListIOs(ListView):
     model = OneIO
-    template_name = 'finance/one_io_list.html'
+    template_name = 'finance/ledger.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -57,7 +57,7 @@ class ListIOs(ListView):
 class DetailIO(UpdateView):
     model = OneIO
     form_class = UpdateIOForm
-    template_name = 'finance/one_io_detail_update.html'
+    template_name = 'finance/one_detail.html'
 
     def get_success_url(self):
         return reverse_lazy('list-io')
@@ -71,7 +71,7 @@ class DetailIO(UpdateView):
 class CreateIO(CreateView):
     model = OneIO
     form_class = UpdateIOForm
-    template_name = 'finance/one_io_create.html'
+    template_name = 'finance/one_create.html'
     success_url = reverse_lazy('list-io')
 
 
