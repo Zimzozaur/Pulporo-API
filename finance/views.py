@@ -60,19 +60,19 @@ class DetailIO(UpdateView):
     template_name = 'finance/one_detail.html'
 
     def get_success_url(self):
-        return reverse_lazy('list-io')
+        return reverse_lazy('ledger')
 
 
 class CreateIO(CreateView):
     model = OneIO
     form_class = UpdateIOForm
     template_name = 'finance/one_create.html'
-    success_url = reverse_lazy('list-io')
+    success_url = reverse_lazy('ledger')
 
 
 class DeleteIO(DeleteView):
     model = OneIO
-    success_url = reverse_lazy('list-io')
+    success_url = reverse_lazy('ledger')
 
     def post(self, request, *args, **kwargs):
         selected_pks = request.POST.getlist('selected_pk')
