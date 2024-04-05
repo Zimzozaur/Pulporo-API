@@ -1,4 +1,4 @@
-# Pulporo: Your Financial Freedom Companion
+# Pulporo: Your Financial Freedom Companion (Pre-Alpha)
 
 ## Are you tired of juggling between ugly spreadsheets or dealing with shallow apps that offer confusing pie charts? 
 
@@ -32,10 +32,11 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
 2. **SQLite Installation:**
    - SQLite is included with Python, so if you installed Python 3.12, you should already have SQLite available. If not, you can download SQLite from the [official SQLite website](https://www.sqlite.org/download.html) and follow the installation instructions for your operating system.
 
-### Project Setup
+### Project Setup (Under 1 min)
 1. Clone this project
-2. Create virtual env in project directory - <code>python -m venv my_venv</code>
-3. Activate virtual env:
+2. Move to project - `cd Pulporo`
+3. Create virtual env in project directory - `python -m venv my_venv`
+4. Activate virtual env:
    - **Mac/Linux:**
      ```bash
      source my_venv/bin/activate
@@ -44,14 +45,15 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
      ```powershell
      \my_venv\Scripts\Activate.ps1
      ```
-4. Install dependencies from requirements.txt - <code>pip install -r requirements.txt</code>
-5. Set up SQLite db:
-  ```python
+5. Install dependencies from requirements.txt - `pip install -r requirements.txt`
+6. Set up SQLite db:
+    ```
     python manage.py makemigrations
     python manage.py migrate
-```
-6. Fetch fake data to db - 
-7. Run project in browser - <code>python manage.py runserver</code>
+    ```
+7. Fetch fake data to db - <I have to create this script>
+8. Run app in browser - `python manage.py runserver`
+9.Type in browser - http://127.0.0.1:8000/ledger/
 
 ## Find a bug?
 
