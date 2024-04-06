@@ -34,22 +34,25 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
 
 ### Project Setup (Under 1 min)
 1. Clone this project
+   ``` bash
+   git clone https://github.com/Zimzozaur/Pulporo.git
+   ```
 2. Move to project
     ```
     cd Pulporo
     ```
 3. Create virtual env in project directory 
    ```
-   python -m venv my_venv
+   python -m venv venv
    ```
 4. Activate virtual env:
    - **Mac/Linux:**
      ```bash
-     source my_venv/bin/activate
+     source venv/bin/activate
      ```
    - **Windows (PowerShell):**
      ```powershell
-     \my_venv\Scripts\Activate.ps1
+     \venv\Scripts\Activate.ps1
      ```
 5. Install dependencies from requirements.txt - `pip install -r requirements.txt`
 6. Set up SQLite db:
