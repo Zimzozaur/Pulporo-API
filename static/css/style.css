@@ -112,16 +112,26 @@ html {
   background-color: #D9D9D9;
   border-radius: 15px;
   padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.left-bar li a {
+.icon-container {
+  margin: .3125rem 0;
+}
+
+.icon-wrapper {
+  margin-bottom: 0.3125rem;
+  border-radius: 15px;
+}
+
+.left-icon {
   font-size: 3rem;
   margin: 0 .3125rem;
 }
 
 .tab-active {
   background-color: #9D9C9C;
-  border-radius: 15px;
 }
 
 .main {
