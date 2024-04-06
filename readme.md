@@ -51,9 +51,11 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
     python manage.py makemigrations
     python manage.py migrate
     ```
-7. Fetch fake data to db - <I have to create this script>
-8. Run app in browser - `python manage.py runserver`
-9.Type in browser - http://127.0.0.1:8000/ledger/
+7. Create a fixture and load data to db 
+    ```python manage.py create_load_fake```
+8. Run app in browser
+   ```python manage.py runserver```
+9. Type in browser - http://127.0.0.1:8000/ledger/
 
 ## Find a bug?
 
