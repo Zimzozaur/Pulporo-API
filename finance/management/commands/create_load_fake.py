@@ -2,13 +2,21 @@ import os
 import subprocess
 
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
+
 from finance.fixtures.create_and_load import create_fake_json
+from finance.models import Currency
 
 
 class Command(BaseCommand):
     help = 'Create a fixture and loads it to DB - Do not use in production'
 
     def handle(self, *args, **options):
+        if len(User.objects.all()) == 0:
+            User.objects.create()
+        if len(Currency.objects.all()) == 0:
+            Currency.objects.create()
+
         file_path = 'finance/fixtures/cash_flow_from_31_1_2023_to_now.json'
         if not os.path.exists(file_path):
             fake_json = create_fake_json()

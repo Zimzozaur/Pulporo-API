@@ -12,12 +12,6 @@ def create_fake_json() -> str:
     Start with 1 January 2023 and creates IO data up to today.
     Creates between 25 and 50 outcomes and between 2 and 5 incomes
     """
-
-    if len(User.objects.all()) == 0:
-        User.objects.create()
-    if len(Currency.objects.all()) == 0:
-        Currency.objects.create()
-
     fake = Faker()
     Faker.seed(0)
     this_year = datetime.today().year
