@@ -1,9 +1,9 @@
+from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.db.models import Sum
-import datetime
 from .models import OneIO
 from .forms import UpdateIOForm
 """
@@ -80,5 +80,25 @@ class DeleteIO(DeleteView):
         return super().post(request, *args, **kwargs)
 
 
+def dashboard(request):
+    return render(request, 'finance/dashboard.html')
 
 
+def recurring(request):
+    return render(request, 'finance/recurring.html')
+
+
+def investments(request):
+    return render(request, 'finance/investments.html')
+
+
+def liabilities(request):
+    return render(request, 'finance/liabilities.html')
+
+
+def reminders(request):
+    return render(request, 'finance/reminders.html')
+
+
+def media(request):
+    return render(request, 'finance/media.html')
