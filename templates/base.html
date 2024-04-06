@@ -37,17 +37,27 @@
 </header>
 <div class="app-container">
     <nav class="left-bar">
-        <ul>
-            <li><a href="#">📊</a></li>
-            <li class="{% if request.path == '/ledger/' %}tab-active {% endif %}">
-                <a href="{% url 'ledger' %}">📖️</a>
-            </li>
-            <li><a href="#">🔁</a></li>
-            <li><a href="#">➡️</a></li>
-            <li><a href="#">⬅️</a></li>
-            <li><a href="#">🔔</a></li>
-            <li><a href="#">📦</a></li>
-        </ul>
+        <a href="{% url 'dashboard' %}" class="{% if request.path == '/dashboard/' %}tab-active {% endif %}">
+            <div>📊</div>
+        </a>
+        <a href="{% url 'ledger' %}" class="{% if request.path == '/ledger/' %}tab-active {% endif %}">
+            <div>📖</div>
+        </a>
+        <a href="{% url 'recurring' %}" class="{% if request.path == '/recurring/' %}tab-active {% endif %}">
+            <div>🔁</div>
+        </a>
+        <a href="{% url 'investments' %}" class="{% if request.path == '/investments/' %}tab-active {% endif %}">
+            <div>➡</div>
+        </a>
+        <a href="{% url 'liabilities' %}" class="{% if request.path == '/liabilities/' %}tab-active {% endif %}">
+            <div>⬅️</div>
+        </a>
+        <a href="{% url 'reminders' %}" class="{% if request.path == '/reminders/' %}tab-active {% endif %}">
+            <div>🔔</div>
+        </a>
+        <a href="{% url 'media' %}" class="{% if request.path == '/media/' %}tab-active {% endif %}">
+            <div>📦</div>
+        </a>
     </nav>
     <main class="main">
         {% block content %}
