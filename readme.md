@@ -54,7 +54,10 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
      ```powershell
      \venv\Scripts\Activate.ps1
      ```
-5. Install dependencies from requirements.txt - `pip install -r requirements.txt`
+5. Install dependencies from requirements.txt
+   ```
+   pip install -r requirements.txt
+   ```
 6. Set up SQLite db:
     ```
     python manage.py makemigrations
