@@ -34,8 +34,14 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
 
 ### Project Setup (Under 1 min)
 1. Clone this project
-2. Move to project - `cd Pulporo`
-3. Create virtual env in project directory - `python -m venv my_venv`
+2. Move to project
+    ```
+    cd Pulporo
+    ```
+3. Create virtual env in project directory 
+   ```
+   python -m venv my_venv
+   ```
 4. Activate virtual env:
    - **Mac/Linux:**
      ```bash
