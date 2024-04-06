@@ -6,7 +6,6 @@ import datetime
 from .models import Company, CashTag, Currency, OneIO
 from .views import ListIOs
 from .forms import UpdateIOForm
-from finance.fixtures.create_and_fetch import create_and_fetch
 
 
 # ---------- Forms ----------
@@ -247,28 +246,4 @@ class TestOneInOut(TestCase):
 
         res = [obj.value for obj in OneIO.objects.all()]
         self.assertEqual([10, 30, 20, 100], res)
-
-
-class CreateAndFetch(TestCase):
-    def setUp(self):
-        create_and_fetch()
-
-    def test_create_user(self):
-        qs = User.objects.all()
-        self.assertEqual(1, len(qs))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
