@@ -18,59 +18,57 @@
 <header class="top-bar">
     <div class="top-bar-actions">
         <input autocomplete="off" type="search" placeholder="Search 🔍" class="search-tool">
-        <a href="#">
-
-            <div class="add-bt"><a href="{% url 'create-io' %}" class="top-bar-text">Add ➕</a></div>
+        <a href="{% url 'create-io' %}" class="top-bar-text">
+            <div class="add-bt">Add ➕</div>
         </a>
     </div>
     <div class="top-bar-stats">
-        <div class="runway"><span class="top-bar-text">400 days 🏃🏿</span></div>
-        <div class="cash"><span class="top-bar-text">100K 💰</span></div>
-        <div class="investments"><span class="top-bar-text">1.7 mln 💸</span></div>
-        <div class="loans"><span class="top-bar-text">23K 🏦</span></div>
+        <div class="runway">400 days 🏃🏿</div>
+        <div class="cash">100K 💰</div>
+        <div class="investments">1.7 mln 💸</div>
+        <div class="loans">23K 🏦</div>
     </div>
     <div class="top-bar-settings">
         <a href="#">
-            <div class="settings-bt"><span class="top-bar-text">Settings 🎨</span></div>
+            <div class="settings-bt">Settings 🎨</div>
         </a>
     </div>
 </header>
-<!-- TODO: Find why active does not change the color around icon-->
 <div class="app-container">
     <nav class="left-bar">
-        <div class="icon-container">
-            <a href="{% url 'dashboard' %}" class="icon-wrapper {% if request.path == '/dashboard/' %} tab-active{% endif %}">
-                <div class="left-icon">📊</div>
+        <div class="icon-container {% if request.path == '/dashboard/' %} tab-active{% endif %}">
+            <a href="{% url 'dashboard' %}" class="icon-link">
+                📊
             </a>
         </div>
-        <div class="icon-container">
-            <a href="{% url 'ledger' %}" class="icon-wrapper {% if request.path == '/ledger/' %}tab-active {% endif %}">
-                <div class="left-icon">📖</div>
+        <div class="icon-container {% if request.path == '/ledger/' %} tab-active{% endif %}">
+            <a href="{% url 'ledger' %}" class="icon-link">
+                📖
             </a>
         </div>
-        <div class="icon-container">
-            <a href="{% url 'recurring' %}" class="icon-wrapper {% if request.path == '/recurring/' %}tab-active {% endif %}">
-                <div class="left-icon">🔁</div>
+        <div class="icon-container {% if request.path == '/recurring/' %}tab-active {% endif %}">
+            <a href="{% url 'recurring' %}" class="icon-link">
+                🔁
             </a>
         </div>
-        <div class="icon-container">
-            <a href="{% url 'investments' %}" class="icon-wrapper {% if request.path == '/investments/' %}tab-active {% endif %}">
-                <div class="left-icon">➡</div>
+        <div class="icon-container {% if request.path == '/investments/' %}tab-active {% endif %}">
+            <a href="{% url 'investments' %}" class="icon-link ">
+                ➡
             </a>
         </div>
-        <div class="icon-container">
-            <a href="{% url 'liabilities' %}" class="icon-wrapper {% if request.path == '/liabilities/' %}tab-active {% endif %}">
-                <div class="left-icon">⬅️</div>
+        <div class="icon-container {% if request.path == '/liabilities/' %}tab-active {% endif %}">
+            <a href="{% url 'liabilities' %}" class="icon-link">
+                ⬅
             </a>
         </div>
-        <div class="icon-container">
-            <a href="{% url 'reminders' %}" class="icon-wrapper {% if request.path == '/reminders/' %}tab-active {% endif %}">
-                <div class="left-icon">🔔</div>
+        <div class="icon-container {% if request.path == '/reminders/' %}tab-active {% endif %}">
+            <a href="{% url 'reminders' %}" class="icon-link ">
+                🔔
             </a>
         </div>
-        <div class="icon-container">
-            <a href="{% url 'media' %}" class="icon-wrapper {% if request.path == '/media/' %}tab-active {% endif %}">
-                <div class="left-icon">📦</div>
+        <div class="icon-container {% if request.path == '/media/' %}tab-active {% endif %}">
+            <a href="{% url 'media' %}" class="icon-link ">
+                📦
             </a>
         </div>
     </nav>
