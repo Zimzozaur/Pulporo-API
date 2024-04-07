@@ -1,62 +1,67 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-	<link rel="stylesheet" href="{% static 'css/ledger.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ledger.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="ledger-menu">
-        <div class="ledger-menu-left">
-            <div class="is-outcome">
-                <button onclick="setLedgerCookie('is-outcome', false)" class="ledger-menu--active">Income</button>
-                <button onclick="setLedgerCookie('is-outcome', true)">Outcome</button>
+    <div class="ledger-wrapper">
+        <div class="ledger-menu">
+            <div class="ledger-menu-left">
+                <div class="is-outcome">
+                    <button onclick="setLedgerCookie('is-outcome', false)" class="income-bt">Incomes</button>
+                    <button onclick="setLedgerCookie('is-outcome', true)" class="outcome-bt">Outcomes</button>
+                </div>
+                <div class="is-recurring">
+                    <button onclick="setLedgerCookie('is-recurring', 'one')" class="one-off-bt">One-off</button>
+                    <button onclick="setLedgerCookie('is-recurring', 'all')" class="all-bt">All</button>
+                    <button onclick="setLedgerCookie('is-recurring', 'rec')" class="recurring-bt">Recurring</button>
+                </div>
             </div>
-            <div class="is-recurring">
-                <button onclick="setLedgerCookie('is-recurring', 1)">One-off</button>
-                <button onclick="setLedgerCookie('is-recurring', 2)">All</button>
-                <button onclick="setLedgerCookie('is-recurring', 3)">Recurring</button>
+            <div class="ledger-menu-right">
+                <div class="set-date">
+                    <input type="month" min="2023-01" max="2026-12" id="monthCalendar" onchange="setLedgerCalendarCookie()" class="calendar-bt">
+                    <div class="date-buttons">
+                        <button onclick="setLedgerDateCookie(false)" class="previous-bt">⬅ Previous</button>
+                        <button onclick="setLedgerTodayCookie()" class="today-bt">Today</button>
+                        <button onclick="setLedgerDateCookie(true)" class="next-bt">Next ➡</button>
+                    </div>
+
+                </div>
             </div>
         </div>
-        <div class="ledger-menu-right">
-               <div class="set-date">
-                <button onclick="setLedgerTodayCookie()">Today</button>
-                <button onclick="setLedgerDateCookie(false)">Previous</button>
-                <input type="month" min="2023-01" max="2026-12" id="monthCalendar" onchange="setLedgerCalendarCookie()">
-                <button onclick="setLedgerDateCookie(true)">Next</button>
-            </div>
-        </div>
-    </div>
-    <div class="table-container">
-        <table id="TableIO" class="display ">
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Value</th>
-                <th>Date</th>
-                <th>Notes</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for obj in object_list %}
+        <div class="table-wrapper">
+            <table id="TableIO" class="display">
+                <thead>
                 <tr>
-                    <td>
-                        <a href="{% url 'detail-io' pk=obj.pk %}">{{ obj.title }}</a>
-                    </td>
-                    <td>{% if is_outcome %}-{% endif %}{{ obj.value }}</td>
-                    <td style="text-align: center">{{ obj.date|date:'d' }}</td>
-                    <td>{{ obj.notes }}</td>
+                    <th>Title</th>
+                    <th>Value</th>
+                    <th>Date</th>
+                    <th>Notes</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot>
-            <tr>
-                <td><strong>Total</strong></td>
-                <td><strong>{% if is_outcome %}-{% endif %}{{ total_sum }}</strong></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tfoot>
-        </table>
+                </thead>
+                <tbody>
+                {% for obj in object_list %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'detail-io' pk=obj.pk %}">{{ obj.title }}</a>
+                        </td>
+                        <td>{% if is_outcome %}-{% endif %}{{ obj.value }}</td>
+                        <td style="text-align: center">{{ obj.date|date:"d" }}</td>
+                        <td>{{ obj.notes }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>{% if is_outcome %}-{% endif %}{{ total_sum }}</strong></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
     <script src="{% static 'js/init_datatable.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/ledger.js' %}"></script>
 {% endblock %}

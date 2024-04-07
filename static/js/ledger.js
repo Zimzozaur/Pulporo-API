@@ -1,6 +1,50 @@
+const incomeBt = document.querySelector('.income-bt');
+const outcomeBt = document.querySelector('.outcome-bt');
+const oneOffBt = document.querySelector('.one-off-bt');
+const allBt = document.querySelector('.all-bt');
+const recurringBt = document.querySelector('.recurring-bt');
+
+const ledgerMenuActive = 'ledger-menu--active';
+
 document.addEventListener('DOMContentLoaded', function() {
     setCalendar();
 });
+
+// I need 2 scripts to check if IO has a cookie and set class
+// and does is-rec has a cookie and set class
+
+window.onload = function () {
+    setActiveButtons();
+}
+
+function setActiveButtons() {
+    const isOutcome = getCookie('is-outcome');
+    const isRecurring = getCookie('is-recurring');
+    console.log(isOutcome || isOutcome === null);
+
+    if (isOutcome === 'true' || isOutcome === null) {
+        incomeBt.classList.remove(ledgerMenuActive);
+        outcomeBt.classList.add(ledgerMenuActive);
+    } else {
+        incomeBt.classList.add(ledgerMenuActive);
+        outcomeBt.classList.remove(ledgerMenuActive);
+    }
+
+    if (isRecurring === 'all' || isRecurring === null) {
+        allBt.classList.add(ledgerMenuActive);
+        oneOffBt.classList.remove(ledgerMenuActive);
+        recurringBt.classList.remove(ledgerMenuActive);
+    } else if (isRecurring === 'one') {
+        oneOffBt.classList.add(ledgerMenuActive);
+        allBt.classList.remove(ledgerMenuActive);
+        recurringBt.classList.remove(ledgerMenuActive);
+    } else {
+        recurringBt.classList.add(ledgerMenuActive);
+        allBt.classList.remove(ledgerMenuActive);
+        oneOffBt.classList.remove(ledgerMenuActive);
+    }
+}
+
 
 function setLedgerCookie(name, value) {
     document.cookie = `${name}=${value}; expires=${setExpireDate()}; path=/ledger`;
@@ -11,11 +55,11 @@ function setLedgerDateCookie(forward) {
     const month = getCookie('ledger-month');
     const year = getCookie('ledger-year') * 1;
 
-    let date = null
+    let date;
     if (month === null) {
         date = new Date();
     } else {
-        date = new Date(year, month * 1)
+        date = new Date(year, month * 1);
     }
 
     if (forward) {
@@ -48,11 +92,9 @@ function setCalendar() {
     const month = getCookie('ledger-month');
     const year = getCookie('ledger-year');
     if (!month) {
-        console.log('1');
         const date = new Date();
         monthInput.value = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
     } else {
-        console.log(`${year}-${(month * 1 + 1).toString().padStart(2, '0')}`);
         monthInput.value = `${year}-${(month * 1 + 1).toString().padStart(2, '0')}`;
     }
 }
