@@ -81,6 +81,9 @@ function setLedgerTodayCookie() {
 
 function setLedgerCalendarCookie() {
     const monthInput = document.getElementById('monthCalendar');
+    if (monthInput.value.length !== 7){
+        return;
+    }
     const yearMonth = monthInput.value.split('-');
     document.cookie = `ledger-month=${yearMonth[1] * 1 - 1}; expires=${setExpireDate()}; path=/ledger`;
     document.cookie = `ledger-year=${yearMonth[0]}; expires=${setExpireDate()}; path=/ledger`;
