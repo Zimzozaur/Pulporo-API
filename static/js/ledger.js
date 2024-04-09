@@ -19,7 +19,7 @@ window.onload = function () {
 
 function setActiveButtons() {
     const isOutcome = getCookie('is-outcome');
-    const isRecurring = getCookie('is-recurring');
+    const isOneOff = getCookie('is-one-off');
     console.log(isOutcome || isOutcome === null);
 
     if (isOutcome === 'true' || isOutcome === null) {
@@ -30,11 +30,11 @@ function setActiveButtons() {
         outcomeBt.classList.remove(ledgerMenuActive);
     }
 
-    if (isRecurring === 'all' || isRecurring === null) {
+    if (isOneOff === 'all' || isOneOff === null) {
         allBt.classList.add(ledgerMenuActive);
         oneOffBt.classList.remove(ledgerMenuActive);
         recurringBt.classList.remove(ledgerMenuActive);
-    } else if (isRecurring === 'one') {
+    } else if (isOneOff === 'one-off') {
         oneOffBt.classList.add(ledgerMenuActive);
         allBt.classList.remove(ledgerMenuActive);
         recurringBt.classList.remove(ledgerMenuActive);

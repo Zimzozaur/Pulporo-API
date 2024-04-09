@@ -6,14 +6,6 @@ from django.urls import reverse_lazy
 from django.db.models import Sum
 from .models import OneIO
 from .forms import UpdateIOForm
-"""
-We need a view for to display all: 
-(by default display this month)
- outcomes 1-off
- outcomes recurring
- incomes 1-off
- outcomes recurring
-"""
 
 
 class ListIOs(ListView):
@@ -31,14 +23,27 @@ class ListIOs(ListView):
         if isinstance(is_outcome, str):
             is_outcome = True if is_outcome == 'true' else False
 
-        # TODO: add recurring parameter
-        # is_one_off = self.request.COOKIES.get('is-one-off', True)
-
-        return queryset.filter(
-            date__year=year,
-            date__month=month,
-            is_outcome=is_outcome,
-        )
+        is_one_off = self.request.COOKIES.get('is-one-off', 'one-off')
+        if is_one_off == 'one-off':
+            return queryset.filter(
+                date__year=year,
+                date__month=month,
+                is_outcome=is_outcome,
+                manager_id__isnull=True,
+            )
+        elif is_one_off == 'recurring':
+            return queryset.filter(
+                date__year=year,
+                date__month=month,
+                is_outcome=is_outcome,
+                manager_id__isnull=False,
+            )
+        else:
+            return queryset.filter(
+                date__year=year,
+                date__month=month,
+                is_outcome=is_outcome,
+            )
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -50,7 +55,10 @@ class ListIOs(ListView):
         if isinstance(is_outcome, str):
             is_outcome = True if is_outcome == 'true' else False
 
+        is_one_off = self.request.COOKIES.get('is-one-off', 'one-off')
+
         context['is_outcome'] = is_outcome
+        context['is_one_off'] = is_one_off
         return context
 
 

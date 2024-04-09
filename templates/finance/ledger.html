@@ -12,9 +12,9 @@
                     <button onclick="setLedgerCookie('is-outcome', true)" class="outcome-bt">Outcomes</button>
                 </div>
                 <div class="is-recurring">
-                    <button onclick="setLedgerCookie('is-recurring', 'one')" class="one-off-bt">One-off</button>
-                    <button onclick="setLedgerCookie('is-recurring', 'all')" class="all-bt">All</button>
-                    <button onclick="setLedgerCookie('is-recurring', 'rec')" class="recurring-bt">Recurring</button>
+                    <button onclick="setLedgerCookie('is-one-off', 'one-off')" class="one-off-bt">One-off</button>
+                    <button onclick="setLedgerCookie('is-one-off', 'all')" class="all-bt">All</button>
+                    <button onclick="setLedgerCookie('is-one-off', 'recurring')" class="recurring-bt">Recurring</button>
                 </div>
             </div>
             <div class="ledger-menu-right">
@@ -36,6 +36,9 @@
                     <th>Title</th>
                     <th>Value</th>
                     <th>Date</th>
+                    {% if is_one_off != 'one-off' %}
+                    	<th>Manager</th>
+                    {% endif %}
                     <th>Notes</th>
                 </tr>
                 </thead>
@@ -47,6 +50,10 @@
                         </td>
                         <td>{% if is_outcome %}-{% endif %}{{ obj.value }}</td>
                         <td style="text-align: center">{{ obj.date|date:"d" }}</td>
+                        {% if is_one_off != 'one-off' %}
+                            <td>{{ obj.manager_id.title }}</td>
+                        {% endif %}
+                        
                         <td>{{ obj.notes }}</td>
                     </tr>
                 {% endfor %}
@@ -55,6 +62,9 @@
                 <tr>
                     <td><strong>Total</strong></td>
                     <td><strong>{% if is_outcome %}-{% endif %}{{ total_sum }}</strong></td>
+                    {% if is_one_off != 'one-off' %}
+                            <td></td>
+                    {% endif %}
                     <td></td>
                     <td></td>
                 </tr>
@@ -62,6 +72,6 @@
             </table>
         </div>
     </div>
-    <script src="{% static 'js/init_datatable.js' %}"></script>
+    <script src="{% static 'js/DataTables.js' %}"></script>
     <script src="{% static 'js/ledger.js' %}"></script>
 {% endblock %}
