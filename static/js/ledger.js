@@ -20,7 +20,6 @@ window.onload = function () {
 function setActiveButtons() {
     const isOutcome = getCookie('is-outcome');
     const isOneOff = getCookie('is-one-off');
-    console.log(isOutcome || isOutcome === null);
 
     if (isOutcome === 'true' || isOutcome === null) {
         incomeBt.classList.remove(ledgerMenuActive);
