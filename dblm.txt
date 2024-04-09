@@ -1,0 +1,169 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+Project Pulporo {
+  database_type: 'PostgreSQL'
+}
+
+Table Company {
+  // Netflix, Microsoft, Apple
+  company_id integer [primary key, increment]
+  name varchar(50)
+}
+
+Ref: Company.company_id < ManagerIO.company_id
+Ref: Company.company_id < OneIO.company_id
+
+
+Table Cash_Flow_Tag {
+  // e.g. Entertainment, Health or Full-Time Job
+  flow_id integer [primary key, increment]
+  name varchar(50)
+}
+
+Ref: Cash_Flow_Tag.flow_id < OneIO.flow_tag_id
+Ref: Cash_Flow_Tag.flow_id < ManagerIO.flow_tag_id
+// Ref: Cash_Flow_Tag.flow_id < Investment.investment_id
+
+
+Table OneIO {
+  // The smallest unit of negative flow
+  one_io_id integer [primary key, increment]
+  title text [not null]
+  is_outcome bool [not null]
+  value decimal (17, 2) [not null]
+  currency_id integer [not null]
+  date date [not null]
+  // Should be added to next year calculation
+  // Recurring for non-linear outcomes like grocery
+  next_year_projection bool [not null]
+  flow_tag_id int
+  company_id int
+  notes text
+  media_link text
+  creation_date datetime [not null]
+  last_modification datetime [not null]
+}
+
+
+Table ManagerIO {
+  // Container for recurring Outcomes
+  recurring_OneIO_id integer [primary key, increment]
+  title text [not null]
+  user_id integer [not null]
+  active bool [not null]
+  is_outcome bool
+  // it is the value that will be applied to
+  // every future OneIO
+  value decimal (17, 2) [not null]
+  one_io_ids decimal[] [not null]
+  one_io_interval text [not null]
+  interval_start date [not null]
+  interval_end date
+  flow_tag_id int
+  company_id int
+  notes text
+  media_link text
+  creation_date datetime [not null]
+  last_modification datetime [not null]
+}
+
+Ref: ManagerIO.one_io_ids < OneIO.one_io_id
+
+
+
+// NOT IN MVP
+
+// Table Investment {
+//   // For now low focus
+//   investment_id integer [primary key, increment]
+//   user_id integer [not null]
+//   flow_id integer [not null]
+//   title text [not null]
+//   notes text
+//   amount decimal (15, 2) [not null]
+//   currency_id int [not null]
+//   related_one_ios int
+//   investment_tag int
+//   creation_date datetime [not null]
+//   last_modification datetime [not null]
+// }
+
+// Ref: Investment.related_one_ios < OneIO.one_io_id
+
+// Table Account {
+//   // One account can have many users
+//   users_id integer[] [not null, unique]
+//   user_privileges int
+//   account_id integer [primary key, increment]
+//   account_email varchar(255) [not null, unique]
+//   account_password varchar(255) [not null, unique]
+//   creation_date datetime [not null]
+//   base_currency_id int // Requires API
+// }
+
+// Ref: Account.users_id < Users.user_id
+// Ref: Account.creation_date < OneIO.one_io_id
+
+
+// Table Users {
+//   user_id integer [primary key, increment]
+//   user_name varchar(50) [not null, unique]
+// }
+
+// Ref: Users.user_id < OneIO.user_id
+// Ref: Users.user_id < Recurring_OneIO.user_id
+// Ref: Users.user_id < Investment.user_id
+
+
+// Table Currency {
+//   currency_id integer [primary key, increment]
+//   name varchar(50) [not null, unique]
+//   symbol varchar(5) [not null, unique]
+//   iso_code varchar(3) [not null, unique]
+// }
+
+// Ref: Currency.currency_id < OneIO.currency_id
+// Ref: Currency.currency_id < Investment.currency_id
+// Ref: Currency.currency_id - Account.base_currency_id
+
+
+// NOT SURE ZONE
+
+// Table Income {
+//   // The smallest unit of positive flow
+//   income_id integer [primary key, increment]
+//   title text [not null]
+//   user_id integer [not null]
+//   value decimal (15, 2) [not null]
+//   currency_id integer [not null]
+//   date date [not null]
+//   flow_tag_id int
+//   notes text
+//   media_link text
+//   creation_date datetime [not null]
+//   last_modification datetime [not null]
+// }
+
+// Ref: Recurring_Income.incomes_ids < Income.income_id
+// Ref: Cash_Flow_Tag.flow_id < Income.flow_tag_id
+// Ref: Cash_Flow_Tag.flow_id < Recurring_Income.flow_tag_id
+// Ref: Users.user_id < Income.user_id
+// Ref: Users.user_id < Recurring_Income.user_id
+// Ref: Currency.currency_id < Income.currency_id
+
+// Table Recurring_Income {
+//   // Container for recurring Incomes
+//   recurring_income_id integer [primary key, increment]
+//   title text [not null]
+//   user_id integer [not null]
+//   active bool [not null]
+//   // it is the value that will be applied to
+//   // every future Income
+//   value decimal (15, 2) [not null]
+//   incomes_ids decimal[] [not null]
+//   income_interval json [not null]
+//   flow_tag_id int
+//   notes text
+//   media_link text
+//   creation_date datetime [not null]
+//   last
