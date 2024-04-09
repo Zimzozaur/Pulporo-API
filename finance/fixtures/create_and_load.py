@@ -2,8 +2,6 @@ import calendar
 import json
 from datetime import datetime
 from faker import Faker
-from django.contrib.auth.models import User
-from finance.models import Currency
 
 
 def create_fake_json() -> str:
@@ -31,8 +29,6 @@ def create_fake_json() -> str:
                     "title": fake.sentence(),
                     "value": fake.random_int(min=min_int, max=max_int),
                     "date": str_date,
-                    "owner": 1,
-                    "currency": 1,
                     "future": is_out,
                     "cash_tag": None,
                     "company": None,
