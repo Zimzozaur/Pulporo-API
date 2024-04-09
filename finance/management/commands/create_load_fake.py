@@ -12,10 +12,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         file_path = 'finance/fixtures/cash_flow_from_31_1_2023_to_now.json'
-        if not os.path.exists(file_path):
-            fake_json = create_fake_json()
-            with open(file_path, 'w') as file:
-                file.write(fake_json)
+        if os.path.exists(file_path):
+            with open(file_path, 'w'):
+                pass
+
+        fake_json = create_fake_json()
+        with open(file_path, 'w') as file:
+            file.write(fake_json)
 
         try:
             subprocess.run(['python', 'manage.py', 'loaddata', file_path], check=True)
