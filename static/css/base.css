@@ -67,6 +67,7 @@ html {
   align-self: center;
   justify-self: center;
   padding: 0 .5rem;
+  cursor: pointer;
 }
 
 .top-bar-stats {
@@ -170,9 +171,104 @@ html {
   padding: .3125rem;
 }
 
+.popup-background {
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  display: none
+}
+
+.popup-body {
+  border-radius: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: #D9D9D9;
+  height: 70%;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: 700px;
+}
+
+.popup-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 4rem;
+}
+
+.popup-title {
+  font-size: 2rem;
+}
+
+.close-wrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 10px;
+  background-color: rgba(157, 156, 156, 0.15);
+}
+
+.close-wrapper:hover {
+  color: white;
+    background-color: #ff5252;
+}
+
+.popup-close {
+  font-size: 30px;
+  position: absolute
+}
+
+.popup-menu {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.625rem;
+  align-items: center;
+  font-size: 1.625rem;
+  cursor: pointer;
+}
+
+.popup-menu-row {
+  display: flex;
+  flex-direction: row;
+  border-radius: 15px;
+  background-color: rgba(157, 156, 156, 0.15);
+  justify-content: space-evenly;
+  width: 70%;
+
+}
+
+.popup-menu-row div {
+  padding: 0.2175rem 0.6125rem;
+  border-radius: 15px;
+  flex-grow: 1;
+  text-align: center;
+}
 
 
 
+.menu-row--active {
+  background-color: #9D9C9C;
+}
 
 
 
