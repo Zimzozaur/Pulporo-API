@@ -182,7 +182,7 @@ html {
   display: none
 }
 
-.popup-body {
+.popup-content {
   border-radius: 15px;
   position: absolute;
   top: 50%;
@@ -229,7 +229,7 @@ html {
 
 .close-wrapper:hover {
   color: white;
-    background-color: #ff5252;
+  background-color: #ff5252;
 }
 
 .popup-close {
@@ -264,11 +264,41 @@ html {
   text-align: center;
 }
 
-
-
 .menu-row--active {
   background-color: #9D9C9C;
 }
+
+.popup-body {
+  display: flex;
+  flex-direction: column;
+  margin: 2% 15%;
+}
+
+.forms-wrapper {
+  flex-grow: 1; /* Set a minimum height for the wrapper */
+  box-sizing: border-box;
+}
+
+.popup-menu-bottom {
+  display: flex;
+
+}
+
+.popup-menu-bottom button {
+  font-size: 1.5rem;
+  border-radius: 15px;
+  padding: .25rem .625rem;
+}
+
+.add-form {
+  background-color: #8dbdab;
+}
+
+.submit-forms {
+  background-color: #619bff;
+  margin-left: auto;
+}
+
 
 
 
