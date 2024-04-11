@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.db.models import Sum
 from .models import OneIO
-from .forms import UpdateIOForm
+from .forms import CreateOneIOForm
 
 
 class ListIOs(ListView):
@@ -59,12 +59,18 @@ class ListIOs(ListView):
 
         context['is_outcome'] = is_outcome
         context['is_one_off'] = is_one_off
+        context['form'] = CreateOneIOForm(is_outcome=0)
         return context
+
+    def post(self, request, *args, **kwargs):
+        form = CreateOneIOForm(request.POST, is_outcome=0)
+        form.save()
+        return redirect('ledger')
 
 
 class DetailIO(UpdateView):
     model = OneIO
-    form_class = UpdateIOForm
+    # form_class = None
     template_name = 'finance/one_detail.html'
 
     def get_success_url(self):
@@ -73,9 +79,14 @@ class DetailIO(UpdateView):
 
 class CreateIO(CreateView):
     model = OneIO
-    form_class = UpdateIOForm
-    template_name = 'finance/one_create.html'
+    form_class = CreateOneIOForm
+    template_name = 'finance/forms/one_create.html'
     success_url = reverse_lazy('ledger')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['is_outcome'] = self.kwargs.get('is_outcome')
+        return kwargs
 
 
 class DeleteIO(DeleteView):
