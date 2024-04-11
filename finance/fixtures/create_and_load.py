@@ -31,8 +31,6 @@ def create_fake_json() -> str:
                     "manager_id": None,
                     "date": str_date,
                     "prediction": is_out,
-                    "cash_tag_id": None,
-                    "company_id": None,
                     "notes": fake.paragraph(nb_sentences=5),
                     "creation_date": f"{str_date}T00:00:00Z",
                     "last_modification": f"{str_date}T00:00:00Z"
