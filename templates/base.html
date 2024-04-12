@@ -19,7 +19,6 @@
     {% endblock %}
 </head>
 <body class="body"
-      hx-headers="{'X-CSRFToken': '{{ csrf_token }}'}"
       x-data="{showPopup: false, hide: false, row1: 0, row2: 0}">
 <header class="top-bar">
     <div class="top-bar-actions">
@@ -27,7 +26,12 @@
             <input autocomplete="off" type="search" placeholder="Search 🔍" class="search-tool">
         </label>
         <div class="popup-wrapper">
-            <div class="add-bt" @click="showPopup = true">Add ➕</div>
+            <div class="add-bt"
+                 @click="showPopup = true"
+                 hx-get="http://127.0.0.1:8000/create/oneio/"
+                 hx-target=".add-form-wrapper"
+                 hx-trigger="intersect"
+            >Add ➕</div>
         </div>
     </div>
     <div class="top-bar-stats">
@@ -119,20 +123,18 @@
                 <div class="menu-row-rec" @click="row2=1;" :class="{ 'menu-row--active': row2 === 1 }">Recurring</div>
             </div>
         </div>
-<div class="popup-body">
-    <div class="form-wrapper">
-        <div class="add-form-wrapper"
-             hx-swap="outerHTML"
-             hx-trigger="click from:#submit-bt"
-             hx-target=".add-form"
-             hx-get="http://127.0.0.1:8000/create/oneio/"
-        >
-            {% include 'finance/forms/one_create.html' %}
+        <div class="popup-body">
+            <div class="form-wrapper">
+                <div class="add-form-wrapper"
+                     hx-get="http://127.0.0.1:8000/create/oneio/"
+                     hx-target=".add-form-wrapper"
+                     hx-swap="outerHTML"
+                     hx-trigger="click from:#submit-bt"
+                >
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
-<!-- Django -->
-{% django_htmx_script %}
+    <!-- Django -->
 </body>
 </html>
