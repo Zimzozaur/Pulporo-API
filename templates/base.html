@@ -135,7 +135,7 @@
         <div class="popup-body">
             <div class="form-wrapper">
                 <div class="add-form-wrapper"
-                     hx-get="http://127.0.0.1:8000/create/oneio/"
+                     hx-get="{% url 'create-io' %}"
                      hx-target=".add-form-wrapper"
                      hx-swap="outerHTML"
                      hx-trigger="click from:#submit-bt"

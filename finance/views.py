@@ -21,7 +21,7 @@ class ListIOs(ListView):
         if path == '/ledger/':
             return ['finance/ledger.html']
         elif path == '/ledger/update-dom/':
-            return ['finance/snippets/ledger_table.html']
+            return ['finance/components/ledger_table.html']
 
         raise ValueError(f"No template found for path: {path}")
 
