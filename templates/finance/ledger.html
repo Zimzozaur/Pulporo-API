@@ -25,51 +25,11 @@
                         <button onclick="setLedgerTodayCookie()" class="today-bt">Today</button>
                         <button onclick="setLedgerDateCookie(true)" class="next-bt">Next ➡</button>
                     </div>
-
                 </div>
             </div>
         </div>
         <div class="table-wrapper">
-            <table id="TableIO" class="display">
-                <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Value</th>
-                    <th>Date</th>
-                    {% if is_one_off != 'one-off' %}
-                    	<th>Manager</th>
-                    {% endif %}
-                    <th>Notes</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for obj in object_list %}
-                    <tr>
-                        <td>
-                            <a href="{% url 'detail-io' pk=obj.pk %}">{{ obj.title }}</a>
-                        </td>
-                        <td>{% if is_outcome %}-{% endif %}{{ obj.value }}</td>
-                        <td style="text-align: center">{{ obj.date|date:"d" }}</td>
-                        {% if is_one_off != 'one-off' %}
-                            <td>{{ obj.manager_id.title }}</td>
-                        {% endif %}
-                        
-                        <td>{{ obj.notes }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td><strong>Total</strong></td>
-                    <td><strong>{% if is_outcome %}-{% endif %}{{ total_sum }}</strong></td>
-                    {% if is_one_off != 'one-off' %}
-                            <td></td>
-                    {% endif %}
-                    <td></td>
-                    <td></td>
-                </tr>
-                </tfoot>
-            </table>
+            {% include 'finance/components/ledger_table.html' %}
         </div>
     </div>
     <script src="{% static 'js/DataTables.js' %}"></script>

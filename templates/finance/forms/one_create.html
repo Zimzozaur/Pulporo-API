@@ -1,8 +1,7 @@
 <form class="add-form"
 hx-post="http://127.0.0.1:8000/create/oneio/"
-hx-on="htmx:afterRequest: this.remove()"
-hx-trigger="click from:#submit-bt">
-    
+hx-trigger="click from:#submit-bt"
+hx-on="this.remove()">
     {{ form.as_p }}
     <button class="submit-form-bt" id="submit-bt" type="submit">Submit All</button>
 </form>

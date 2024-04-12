@@ -19,6 +19,7 @@
     {% endblock %}
 </head>
 <body class="body"
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
       x-data="{showPopup: false, hide: false, row1: 0, row2: 0}">
 <header class="top-bar">
     <div class="top-bar-actions">
@@ -84,7 +85,7 @@
             </a>
         </div>
     </nav>
-    <main class="main" >
+    <main class="main" hx-swap="outerHTML">
         {% block content %}
         {% endblock %}
     </main>
@@ -104,11 +105,19 @@
     </ul>
 </footer>
 <!-- Popup -->
-<div class="popup-background" x-bind:style="{display: showPopup ? 'block' : 'none'}">
+<div class="popup-background" x-bind:style="{display: showPopup ? 'block' : 'none'}" >
     <div class="popup-content">
         <div class="popup-header">
             <h1 class="popup-title">Choose action</h1>
-            <div class="close-wrapper" @click="showPopup = false">
+            <div class="close-wrapper" 
+                 @click="showPopup = false"
+                {% if request.path in '/ledger/' %}
+                	hx-trigger="click"
+                    hx-on="#TableIO.remove()"
+                    hx-get="{% url 'ledger-update' %}"
+                    hx-target=".table-wrapper"
+                {% endif %} 
+            >
                 <span class="popup-close">&times;</span>
             </div>
         </div>

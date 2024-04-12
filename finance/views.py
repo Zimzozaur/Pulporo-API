@@ -3,6 +3,7 @@ from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.decorators.http import require_GET
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.db.models import Sum
@@ -12,9 +13,20 @@ from .forms import OneIOForm
 
 class ListIOs(ListView):
     model = OneIO
-    template_name = 'finance/ledger.html'
+
+    def get_template_names(self):
+        path = self.request.path
+        print('GET_TEMPLATE_NAMES EXECUTED')
+
+        if path == '/ledger/':
+            return ['finance/ledger.html']
+        elif path == '/ledger/update-dom/':
+            return ['finance/snippets/ledger_table.html']
+
+        raise ValueError(f"No template found for path: {path}")
 
     def get_queryset(self):
+        print('GET_QUERYSET EXECUTED')
         queryset = super().get_queryset()
         year = int(self.request.COOKIES.get('ledger-year', timezone.now().year))
 
@@ -48,6 +60,7 @@ class ListIOs(ListView):
             )
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        print('GET_CONTEXT_DATA EXECUTED')
         context = super().get_context_data(**kwargs)
         queryset = self.get_queryset()
         total_sum = queryset.aggregate(total=Sum('value'))['total'] or 0
@@ -65,6 +78,7 @@ class ListIOs(ListView):
         return context
 
     def post(self, request, *args, **kwargs):
+        print('POST EXECUTED')
         form = OneIOForm(request.POST)
         form.save()
         return redirect('ledger')
@@ -86,8 +100,11 @@ class CreateIO(CreateView):
     success_url = reverse_lazy('ledger')
 
     def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'form': self.form_class})
+
+    def form_valid(self, form):
+        form.save()
         form_html = render_to_string(self.template_name, {'form': self.form_class})
-        print(HttpResponse(form_html))
         return HttpResponse(form_html)
 
 
