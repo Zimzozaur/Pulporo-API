@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -5,7 +7,7 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 from django.db.models import Sum
 from .models import OneIO
-from .forms import CreateOneIOForm
+from .forms import OneIOForm
 
 
 class ListIOs(ListView):
@@ -59,11 +61,11 @@ class ListIOs(ListView):
 
         context['is_outcome'] = is_outcome
         context['is_one_off'] = is_one_off
-        context['form'] = CreateOneIOForm(is_outcome=0)
+        context['form'] = OneIOForm()
         return context
 
     def post(self, request, *args, **kwargs):
-        form = CreateOneIOForm(request.POST, is_outcome=0)
+        form = OneIOForm(request.POST)
         form.save()
         return redirect('ledger')
 
@@ -79,14 +81,14 @@ class DetailIO(UpdateView):
 
 class CreateIO(CreateView):
     model = OneIO
-    form_class = CreateOneIOForm
+    form_class = OneIOForm
     template_name = 'finance/forms/one_create.html'
     success_url = reverse_lazy('ledger')
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['is_outcome'] = self.kwargs.get('is_outcome')
-        return kwargs
+    def get(self, request, *args, **kwargs):
+        form_html = render_to_string(self.template_name, {'form': self.form_class})
+        print(HttpResponse(form_html))
+        return HttpResponse(form_html)
 
 
 class DeleteIO(DeleteView):

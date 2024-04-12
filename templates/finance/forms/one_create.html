@@ -1,5 +1,8 @@
-<form method="post">
-    {% csrf_token %}
+<form class="add-form"
+hx-post="http://127.0.0.1:8000/create/oneio/"
+hx-on="htmx:afterRequest: this.remove()"
+hx-trigger="click from:#submit-bt">
+    
     {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <button class="submit-form-bt" id="submit-bt" type="submit">Submit All</button>
 </form>
