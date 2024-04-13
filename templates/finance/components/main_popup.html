@@ -1,0 +1,41 @@
+<div class="popup-content" x-data="{        
+    hide: false, 
+    row1: 0, 
+    row2: 0
+}">
+    <div class="popup-header">
+        <h1 class="popup-title">Choose action</h1>
+        <div class="close-wrapper"
+             @click="showPopup = false"
+                {% if request.path in '/ledger/' %}
+             hx-trigger="click"
+             hx-get="{% url 'ledger-update' %}"
+             hx-target=".table-wrapper"
+                {% endif %}
+        >
+            <span class="popup-close">&times;</span>
+        </div>
+    </div>
+    <div class="popup-menu">
+        <div class="popup-menu-row">
+            <div class="menu-row-outcome" @click="hide = false; row1 = 0" :class="{ 'menu-row--active': row1 === 0 }">Outcome</div>
+            <div class="menu-row-income" @click="hide = false; row1 = 1" :class="{ 'menu-row--active': row1 === 1 }">Income</div>
+            <div class="menu-row-investment" @click="hide = true; row1 = 2" :class="{ 'menu-row--active': row1 === 2 }">Investment</div>
+        </div>
+        <div class="popup-menu-row" x-show="!hide">
+            <div class="menu-row-one" @click="row2=0;" :class="{ 'menu-row--active': row2 === 0 }">One-off</div>
+            <div class="menu-row-rec" @click="row2=1;" :class="{ 'menu-row--active': row2 === 1 }">Recurring</div>
+        </div>
+    </div>
+    <div class="popup-body">
+        <!-- Form is rendered here -->
+        <div class="form-wrapper"
+             hx-get="{% url 'create-io' %}"
+             hx-target=".form-wrapper"
+             hx-swap="outerHTML"
+             hx-trigger="click from:#submit-bt"
+        >
+
+        </div>
+    </div>
+</div>
