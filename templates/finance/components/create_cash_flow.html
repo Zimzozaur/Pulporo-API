@@ -1,11 +1,11 @@
-<div class="popup-content" x-data="{        
+<div class="rounded-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[51] bg-light-grey h-[70%] w-[35%] flex flex-col min-w-[700px] box-border" x-data="{
     hide: false, 
     row1: 0, 
     row2: 0
 }">
-    <div class="popup-header">
-        <h1 class="popup-title">Choose action</h1>
-        <div class="close-wrapper"
+    <div class="flex flex-row items-center justify-center min-h-16">
+        <h1 class="text-3xl">Choose action</h1>
+        <div class="absolute top-0 right-0 w-16 h-16 cursor-pointer flex justify-center items-center rounded-tr-2xl rounded-bl-xl bg-close-bg hover:text-gray-100 hover:bg-red-500"
              @click="showPopup = false"
                 {% if request.path in '/ledger/' %}
              hx-trigger="click"
@@ -13,25 +13,25 @@
              hx-target=".table-wrapper"
                 {% endif %}
         >
-            <span class="popup-close">&times;</span>
+            <span class="text-2xl">&times;</span>
         </div>
     </div>
-    <div class="popup-menu">
-        <div class="popup-menu-row">
-            <div class="menu-row-outcome" @click="hide = false; row1 = 0" :class="{ 'menu-row--active': row1 === 0 }">Outcome</div>
-            <div class="menu-row-income" @click="hide = false; row1 = 1" :class="{ 'menu-row--active': row1 === 1 }">Income</div>
-            <div class="menu-row-investment" @click="hide = true; row1 = 2" :class="{ 'menu-row--active': row1 === 2 }">Investment</div>
+    <div class="mt-4 flex flex-col gap-4 items-center text-2xl cursor-pointer">
+        <div class="flex flex-row rounded-2xl justify-evenly w-[70%] bg-menu-light-grey">
+            <div class="px-3 py-1 rounded-2xl grow text-center" @click="hide = false; row1 = 0" :class="{ 'bg-middle-grey': row1 === 0 }">Outcome</div>
+            <div class="px-3 py-1 rounded-2xl grow text-center" @click="hide = false; row1 = 1" :class="{ 'bg-middle-grey': row1 === 1 }">Income</div>
+            <div class="px-3 py-1 rounded-2xl grow text-center" @click="hide = true; row1 = 2" :class="{ 'bg-middle-grey': row1 === 2 }">Investment</div>
         </div>
-        <div class="popup-menu-row" x-show="!hide">
-            <div class="menu-row-one" @click="row2=0;" :class="{ 'menu-row--active': row2 === 0 }">One-off</div>
-            <div class="menu-row-rec" @click="row2=1;" :class="{ 'menu-row--active': row2 === 1 }">Recurring</div>
+        <div class="flex flex-row rounded-2xl justify-evenly w-[70%] bg-menu-light-grey" x-show="!hide">
+            <div class="px-3 py-1 rounded-2xl grow text-center" @click="row2=0;" :class="{ 'bg-middle-grey': row2 === 0 }">One-off</div>
+            <div class="px-3 py-1 rounded-2xl grow text-center" @click="row2=1;" :class="{ 'bg-middle-grey': row2 === 1 }">Recurring</div>
         </div>
     </div>
-    <div class="popup-body">
+    <div id="form-wrapper" class="flex flex-col w-[70%] self-center mt-4">
         <!-- Form is rendered here -->
-        <div class="form-wrapper"
+        <div class="flex flex-col mt-4 flex-grow"
              hx-get="{% url 'create-io' %}"
-             hx-target=".form-wrapper"
+             hx-target="#form-wrapper"
              hx-swap="outerHTML"
              hx-trigger="click from:#submit-bt"
         >

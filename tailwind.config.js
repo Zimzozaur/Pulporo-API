@@ -10,6 +10,9 @@ module.exports = {
         'main-grey': 'rgba(78, 76, 76, 0.75)',
         'purple': '#BAB0F8',
         'popup-bg': 'rgba(0, 0, 0, 0.5)',
+        'close-bg': 'rgba(157, 156, 156, 0.15)',
+        'menu-light-grey': '#CECECE',
+
       }
     },
   },

@@ -14,7 +14,7 @@ class BaseIOForm(forms.ModelForm):
     title = forms.CharField(
         label=False,
         widget=forms.TextInput(attrs={
-            'class': 'add-form-title',
+            'class': 'text-xl px-4 py-2 rounded-2xl',
             'placeholder': 'Title',
         })
     )
@@ -24,7 +24,7 @@ class BaseIOForm(forms.ModelForm):
         decimal_places=2,
         label=False,
         widget=forms.NumberInput(attrs={
-            'class': 'add-form-value',
+            'class': 'text-xl px-4 py-2 rounded-2xl',
             'placeholder': 100.01
         })
     )
@@ -32,7 +32,7 @@ class BaseIOForm(forms.ModelForm):
         label=False,
         required=False,
         widget=forms.Textarea({
-            'class': 'add-form-notes',
+            'class': 'text-xl px-4 py-2 rounded-2xl h-16 min-h-16 max-h-32',
             'placeholder': 'Place your notes here',
         })
     )
@@ -58,7 +58,7 @@ class OneIOForm(BaseIOForm):
         label=False,
         initial=date.today(),
         widget=forms.DateInput(attrs={
-            'class': 'add-form-date',
+            'class': 'text-xl px-4 py-2 rounded-2xl',
             'type': 'date',
         })
     )
@@ -68,7 +68,7 @@ class OneIOForm(BaseIOForm):
         initial=True,
         help_text='Prediction',
         widget=forms.CheckboxInput(attrs={
-            'class': 'add-form-prediction'
+            'class': 'rounded w-5 h-5'
         })
     )
 
@@ -77,7 +77,7 @@ class OneIOForm(BaseIOForm):
         initial=True,
         help_text='Outcome',
         widget=forms.CheckboxInput(attrs={
-            'class': 'add-form-prediction'
+            'class': 'rounded h-5 w-5'
         })
     )
 

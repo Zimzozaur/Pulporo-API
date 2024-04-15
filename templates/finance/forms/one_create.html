@@ -1,7 +1,16 @@
-<form class="add-form"
+<form class="flex flex-col gap-2"
 hx-post="http://127.0.0.1:8000/create/oneio/"
 hx-trigger="click from:#submit-bt"
 hx-on="this.remove()">
-    {{ form.as_p }}
-    <button class="submit-form-bt" id="submit-bt" type="submit">Submit All</button>
+    {{ form.title }}
+    <div class="flex flex-row items-center text-xl">
+          {{ form.is_outcome }} <p>&nbsp;Outcome</p>
+    </div>
+    {{ form.value }}
+    {{ form.date }}
+    <div class="flex flex-row items-center text-xl">
+        {{ form.prediction }} <p>&nbsp;Prediction</p>
+    </div>
+    {{ form.notes }}
+    <button class="bg-green-300 mt-4 ml-auto rounded-2xl text-xl px-3 py-1" id="submit-bt" type="submit">Submit All</button>
 </form>

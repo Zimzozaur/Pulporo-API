@@ -48,7 +48,7 @@
             <div class="bg-purple rounded-2xl self-center justify-self-center px-2 cursor-pointer h-7"
                  @click="showPopup = true"
                  hx-get="http://127.0.0.1:8000/create/oneio/"
-                 hx-target=".form-wrapper"
+                 hx-target="#form-wrapper"
                  hx-trigger="intersect"
             >Add ➕</div>
         </div>
@@ -83,7 +83,7 @@
             </a>
         </div>
         <div class="px-2 py-4 rounded-2xl {% if request.path == '/investments/' %}bg-middle-grey {% endif %}">
-            <a href="{% url 'investments' %}" class="text-5xl ">
+            <a href="{% url 'investments' %}" class="text-5xl">
                 ➡
             </a>
         </div>
@@ -93,12 +93,12 @@
             </a>
         </div>
         <div class="px-2 py-4 rounded-2xl {% if request.path == '/reminders/' %}bg-middle-grey {% endif %}">
-            <a href="{% url 'reminders' %}" class="text-5xl ">
+            <a href="{% url 'reminders' %}" class="text-5xl">
                 🔔
             </a>
         </div>
         <div class="px-2 py-4 rounded-2xl {% if request.path == '/media/' %}bg-middle-grey {% endif %}">
-            <a href="{% url 'media' %}" class="text-5xl ">
+            <a href="{% url 'media' %}" class="text-5xl">
                 📦
             </a>
         </div>
@@ -112,5 +112,7 @@
 <div class="z-50 w-full h-full bg-popup-bg hidden fixed start-0" x-bind:style="{display: showPopup ? 'block' : 'none'}">
     {% include 'finance/components/create_cash_flow.html' %}
 </div>
+{#<input type="checkbox" hidden="hidden" class="rounded hidden h-5 w-7">#}
+{#<textarea class="hidden class': 'text-xl px-4 py-2 rounded-2xl h-16 min-h-16 max-h-32"></textarea>#}
 </body>
 </html>
