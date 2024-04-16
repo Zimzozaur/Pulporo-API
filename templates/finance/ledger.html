@@ -1,36 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block head %}
-    <link rel="stylesheet" href="{% static 'css/ledger.css' %}">
-{% endblock %}
 {% block content %}
-    <div class="ledger-wrapper">
-        <div class="ledger-menu">
-            <div class="ledger-menu-left">
-                <div class="is-outcome">
-                    <button onclick="setLedgerCookie('is-outcome', false)" class="income-bt">Incomes</button>
-                    <button onclick="setLedgerCookie('is-outcome', true)" class="outcome-bt">Outcomes</button>
+        <div class="flex flex-row">
+            <div class="flex flex-row grow gap-2 text-2xl">
+                <div class="rounded-2xl flex flex-row bg-light-grey">
+                    <button onclick="setLedgerCookie('is-outcome', false)" class="rounded-2xl py-1 px-2.5" id="incomes">Incomes</button>
+                    <button onclick="setLedgerCookie('is-outcome', true)" class="rounded-2xl py-1 px-2.5" id="outcomes">Outcomes</button>
                 </div>
-                <div class="is-recurring">
-                    <button onclick="setLedgerCookie('is-one-off', 'one-off')" class="one-off-bt">One-off</button>
-                    <button onclick="setLedgerCookie('is-one-off', 'all')" class="all-bt">All</button>
-                    <button onclick="setLedgerCookie('is-one-off', 'recurring')" class="recurring-bt">Recurring</button>
+                <div class="rounded-2xl bg-light-grey flex flex-row gap-2">
+                    <button onclick="setLedgerCookie('is-one-off', 'one-off')" class="rounded-2xl py-1 px-2.5" id="one-off">One-off</button>
+                    <button onclick="setLedgerCookie('is-one-off', 'all')" class="rounded-2xl py-1 px-2.5" id="all">All</button>
+                    <button onclick="setLedgerCookie('is-one-off', 'recurring')" class="rounded-2xl py-1 px-2.5" id="recurring">Recurring</button>
                 </div>
             </div>
-            <div class="ledger-menu-right">
-                <div class="set-date">
-                    <input type="month" min="2023-01" max="2026-12" id="monthCalendar" onchange="setLedgerCalendarCookie()" class="calendar-bt">
-                    <div class="date-buttons">
-                        <button onclick="setLedgerDateCookie(false)" class="previous-bt">⬅ Previous</button>
-                        <button onclick="setLedgerTodayCookie()" class="today-bt">Today</button>
-                        <button onclick="setLedgerDateCookie(true)" class="next-bt">Next ➡</button>
+            <div class="flex grow">
+                <div class="ml-auto flex flex-row gap-12">
+                    <input type="month" min="2023-01" max="2026-12" id="monthCalendar" onchange="setLedgerCalendarCookie()" class="text-2xl bg-light-grey rounded-2xl">
+                    <div class="flex flex-row gap-1.5 rounded-2xl bg-light-grey py-0.5 px-1">
+                        <button onclick="setLedgerDateCookie(false)" class="previous-bt text-2xl">⬅ Previous</button>
+                        <button onclick="setLedgerTodayCookie()" class="text-2xl border-l-[3px] border-r-[3px] border-black/25 px-2">Today</button>
+                        <button onclick="setLedgerDateCookie(true)" class="next-bt text-2xl">Next ➡</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="table-wrapper">
+        <div class="bg-light-grey rounded-2xl mt-2 py-2 px-4">
             {% include 'finance/components/ledger_table.html' %}
         </div>
-    </div>
     <script src="{% static 'js/ledger.js' %}"></script>
 {% endblock %}

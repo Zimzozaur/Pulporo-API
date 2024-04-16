@@ -1,10 +1,10 @@
-const incomeBt = document.querySelector('.income-bt');
-const outcomeBt = document.querySelector('.outcome-bt');
-const oneOffBt = document.querySelector('.one-off-bt');
-const allBt = document.querySelector('.all-bt');
-const recurringBt = document.querySelector('.recurring-bt');
+const incomeBt = document.querySelector('#incomes');
+const outcomeBt = document.querySelector('#outcomes');
+const oneOffBt = document.querySelector('#one-off');
+const allBt = document.querySelector('#all');
+const recurringBt = document.querySelector('#recurring');
 
-const ledgerMenuActive = 'ledger-menu--active';
+const ledgerMenuActive = 'bg-middle-grey';
 
 document.addEventListener('DOMContentLoaded', function() {
     setCalendar();
