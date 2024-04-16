@@ -1,25 +1,52 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-        <div class="flex flex-row">
+        <div class="flex flex-row"
+            x-data="{
+                isOutcome: true,
+                isOneOff: 'one-off',
+                date: new Date(),
+                month: new Date().getMonth(),
+                year: new Date().getFullYear()
+            }"
+        >
             <div class="flex flex-row grow gap-2 text-2xl">
                 <div class="rounded-2xl flex flex-row bg-light-grey">
-                    <button onclick="setLedgerCookie('is-outcome', false)" class="rounded-2xl py-1 px-2.5" id="incomes">Incomes</button>
-                    <button onclick="setLedgerCookie('is-outcome', true)" class="rounded-2xl py-1 px-2.5" id="outcomes">Outcomes</button>
+                    <button class="rounded-2xl py-1 px-2.5" id="incomes"
+                        @click="isOutcome=false" :class="{'bg-middle-grey': !isOutcome}"
+                    >Incomes</button>
+                    <button class="rounded-2xl py-1 px-2.5" id="outcomes"
+                        @click="isOutcome=true" :class="{'bg-middle-grey': isOutcome}"
+                    >Outcomes</button>
                 </div>
                 <div class="rounded-2xl bg-light-grey flex flex-row gap-2">
-                    <button onclick="setLedgerCookie('is-one-off', 'one-off')" class="rounded-2xl py-1 px-2.5" id="one-off">One-off</button>
-                    <button onclick="setLedgerCookie('is-one-off', 'all')" class="rounded-2xl py-1 px-2.5" id="all">All</button>
-                    <button onclick="setLedgerCookie('is-one-off', 'recurring')" class="rounded-2xl py-1 px-2.5" id="recurring">Recurring</button>
+                    <button class="rounded-2xl py-1 px-2.5" id="one-off"
+                        @click="isOneOff='one-off'" :class="{'bg-middle-grey': isOneOff === 'one-off'}"
+                    >One-off</button>
+                    <button class="rounded-2xl py-1 px-2.5" id="all"
+                        @click="isOneOff='all'" :class="{'bg-middle-grey': isOneOff === 'all'}"
+                    >All</button>
+                    <button class="rounded-2xl py-1 px-2.5" id="recurring"
+                        @click="isOneOff='recurring'" :class="{'bg-middle-grey': isOneOff === 'recurring'}"
+                    >Recurring</button>
                 </div>
             </div>
             <div class="flex grow">
                 <div class="ml-auto flex flex-row gap-12">
-                    <input type="month" min="2023-01" max="2026-12" id="monthCalendar" onchange="setLedgerCalendarCookie()" class="text-2xl bg-light-grey rounded-2xl">
+                    <input type="month" min="2023-01" max="2026-12" id="monthCalendar" 
+                           class="text-2xl bg-light-grey rounded-2xl"
+                           @change=""
+                    >
                     <div class="flex flex-row gap-1.5 rounded-2xl bg-light-grey py-0.5 px-1">
-                        <button onclick="setLedgerDateCookie(false)" class="previous-bt text-2xl">⬅ Previous</button>
-                        <button onclick="setLedgerTodayCookie()" class="text-2xl border-l-[3px] border-r-[3px] border-black/25 px-2">Today</button>
-                        <button onclick="setLedgerDateCookie(true)" class="next-bt text-2xl">Next ➡</button>
+                        <button class="previous-bt text-2xl"
+                            @click="date.setMonth(date.getMonth() - 1); month=date.getMonth(); year=date.getFullYear()"
+                        >⬅ Previous</button>
+                        <button class="text-2xl border-l-[3px] border-r-[3px] border-black/25 px-2"
+                            @click="date = new Date(); month=date.getMonth(); year=date.getFullYear()"
+                        >Today</button>
+                        <button class="next-bt text-2xl"
+                            @click="date.setMonth(date.getMonth() + 1); month=date.getMonth(); year=date.getFullYear()"
+                        >Next ➡</button>
                     </div>
                 </div>
             </div>
