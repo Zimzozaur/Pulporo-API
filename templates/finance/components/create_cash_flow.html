@@ -10,7 +10,7 @@
                 {% if request.path in '/ledger/' %}
              hx-trigger="click"
              hx-get="{% url 'ledger-update' %}"
-             hx-target=".table-wrapper"
+             hx-target="#table-wrapper"
                 {% endif %}
         >
             <span class="text-2xl">&times;</span>

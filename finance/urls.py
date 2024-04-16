@@ -3,6 +3,9 @@ from . import views
 
 
 urlpatterns = [
+    # Base
+    path('', views.load_base, name='base'),
+
     # Views
     path('dashboard/', views.dashboard, name='dashboard'),
 

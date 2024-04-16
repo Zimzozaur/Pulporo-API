@@ -1,48 +1,86 @@
 <div class="flex flex-row"
-    x-data="{
+     x-data="{
         isOutcome: true,
         isOneOff: 'one-off',
         date: new Date(),
         month: new Date().getMonth(),
-        year: new Date().getFullYear()
+        year: new Date().getFullYear(),
+        setCookie: function() {
+            function setExpireDate() {
+                const now = new Date();
+                const expireTime = new Date(now.getTime() + (30 * 24 * 60 * 60 * 1000)); // 1 month
+                return expireTime.toUTCString();
+            }
+            document.cookie = `ledger-month=${this.month}; expires=${setExpireDate()};`;
+            document.cookie = `ledger-year=${this.year}; expires=${setExpireDate()};`;
+            document.cookie = `is-outcome=${this.isOutcome}; expires=${setExpireDate()};`;
+            document.cookie = `is-one-off=${this.isOneOff}; expires=${setExpireDate()};`;
+        }
     }"
+     x-init="setCookie()"
 >
     <div class="flex flex-row grow gap-2 text-2xl">
         <div class="rounded-2xl flex flex-row bg-light-grey">
             <button class="rounded-2xl py-1 px-2.5" id="incomes"
-                @click="isOutcome=false" :class="{'bg-middle-grey': !isOutcome}"
+                    @click="isOutcome=false; setCookie()" :class="{'bg-middle-grey': !isOutcome}"
+                    hx-trigger="click"
+                    hx-get="{% url 'ledger-update' %}"
+                    hx-target="#TableIO"
             >Incomes</button>
             <button class="rounded-2xl py-1 px-2.5" id="outcomes"
-                @click="isOutcome=true" :class="{'bg-middle-grey': isOutcome}"
+                    @click="isOutcome=true; setCookie()" :class="{'bg-middle-grey': isOutcome}"
+                    hx-trigger="click"
+                    hx-get="{% url 'ledger-update' %}"
+                    hx-target="#TableIO"
             >Outcomes</button>
         </div>
         <div class="rounded-2xl bg-light-grey flex flex-row gap-2">
             <button class="rounded-2xl py-1 px-2.5" id="one-off"
-                @click="isOneOff='one-off'" :class="{'bg-middle-grey': isOneOff === 'one-off'}"
+                    @click="isOneOff='one-off'; setCookie()" :class="{'bg-middle-grey': isOneOff === 'one-off'}"
+                    hx-trigger="click"
+                    hx-get="{% url 'ledger-update' %}"
+                    hx-target="#TableIO"
             >One-off</button>
             <button class="rounded-2xl py-1 px-2.5" id="all"
-                @click="isOneOff='all'" :class="{'bg-middle-grey': isOneOff === 'all'}"
+                    @click="isOneOff='all'; setCookie()" :class="{'bg-middle-grey': isOneOff === 'all'}"
+                    hx-trigger="click"
+                    hx-get="{% url 'ledger-update' %}"
+                    hx-target="#TableIO"
             >All</button>
             <button class="rounded-2xl py-1 px-2.5" id="recurring"
-                @click="isOneOff='recurring'" :class="{'bg-middle-grey': isOneOff === 'recurring'}"
+                    @click="isOneOff='recurring'; setCookie()" :class="{'bg-middle-grey': isOneOff === 'recurring'}"
+                    hx-trigger="click"
+                    hx-get="{% url 'ledger-update' %}"
+                    hx-target="#TableIO"
             >Recurring</button>
         </div>
     </div>
     <div class="flex grow">
         <div class="ml-auto flex flex-row gap-12">
+            <!-- Requires own widget -->
             <input type="month" min="2023-01" max="2026-12" id="monthCalendar"
                    class="text-2xl bg-light-grey rounded-2xl"
                    @change=""
             >
             <div class="flex flex-row gap-1.5 rounded-2xl bg-light-grey py-0.5 px-1">
                 <button class="previous-bt text-2xl"
-                    @click="date.setMonth(date.getMonth() - 1); month=date.getMonth(); year=date.getFullYear()"
+                        @click="date.setMonth(date.getMonth() - 1); month=date.getMonth(); year=date.getFullYear(); setCookie()"
+                        hx-trigger="click"
+                        hx-get="{% url 'ledger-update' %}"
+                        hx-target="#TableIO"
                 >⬅ Previous</button>
                 <button class="text-2xl border-l-[3px] border-r-[3px] border-black/25 px-2"
-                    @click="date = new Date(); month=date.getMonth(); year=date.getFullYear()"
+                        @click="date = new Date(); month=date.getMonth(); year=date.getFullYear(); setCookie()"
+                        hx-trigger="click"
+                        hx-get="{% url 'ledger-update' %}"
+                        hx-target="#TableIO"
+
                 >Today</button>
                 <button class="next-bt text-2xl"
-                    @click="date.setMonth(date.getMonth() + 1); month=date.getMonth(); year=date.getFullYear()"
+                        @click="date.setMonth(date.getMonth() + 1); month=date.getMonth(); year=date.getFullYear(); setCookie()"
+                        hx-trigger="click"
+                        hx-get="{% url 'ledger-update' %}"
+                        hx-target="#TableIO"
                 >Next ➡</button>
             </div>
         </div>

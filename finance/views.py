@@ -11,6 +11,11 @@ from .models import OneIO
 from .forms import OneIOForm
 
 
+@require_GET
+def load_base(request):
+    return render(request, 'base.html')
+
+
 class ListIOs(ListView):
     model = OneIO
 
@@ -77,6 +82,9 @@ class ListIOs(ListView):
         context['form'] = OneIOForm()
         return context
 
+    def render_to_response(self, context, **response_kwargs):
+        return HttpResponse(render_to_string(self.get_template_names(), context))
+
     def post(self, request, *args, **kwargs):
         print('POST EXECUTED')
         form = OneIOForm(request.POST)
@@ -119,7 +127,7 @@ class DeleteIO(DeleteView):
 
 
 def dashboard(request):
-    return render(request, 'finance/dashboard.html')
+    return HttpResponse(render_to_string('finance/dashboard.html'))
 
 
 def recurring(request):

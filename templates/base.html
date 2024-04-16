@@ -10,13 +10,15 @@
     <link rel="stylesheet" href="{% static 'css/tail-out.css' %}">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
-    
+
 </head>
 <body class="min-h-screen h-full bg-dark-grey p-3.5 flex flex-col"
       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
       x-data="{
-        showPopup: false, 
+        showPopup: false,
+        leftMenu: 1
       }
+
 ">
 <header class="w-full h-10 bg-light-grey rounded-2xl py-1.5 flex flex-row items-center text-xl ">
     <div class="ml-4 gap-2.5 flex flex-row items-center">
@@ -46,49 +48,74 @@
 </header>
 <div class="mt-4 flex flex-row grow">
     <nav class="bg-light-grey rounded-2xl flex flex-col gap-2 pt-4">
-        <div class="px-2 py-4 rounded-2xl {% if request.path == '/dashboard/' %} bg-middle-grey {% endif %}">
-            <a href="{% url 'dashboard' %}" class="text-5xl">
-                📊
-            </a>
+        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
+             @click="leftMenu=0" :class="{'bg-middle-grey': leftMenu === 0}"
+             hx-trigger="click"
+             hx-get="{% url 'dashboard' %}"
+             hx-target="#main-app"
+        >
+            📊
         </div>
-        <div class="px-2 py-4 rounded-2xl  {% if request.path == '/ledger/' %} bg-middle-grey{% endif %}">
-            <a href="{% url 'ledger' %}" class="text-5xl">
-                📖
-            </a>
+        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
+             @click="leftMenu=1" :class="{'bg-middle-grey': leftMenu === 1}"
+             hx-trigger="click"
+             hx-get="{% url 'ledger' %}"
+             hx-target="#main-app"
+        >
+            📖
         </div>
-        <div class="px-2 py-4 rounded-2xl {% if request.path == '/recurring/' %}bg-middle-grey {% endif %}">
-            <a href="{% url 'recurring' %}" class="text-5xl">
-                🔁
-            </a>
+        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
+             @click="leftMenu=2" :class="{'bg-middle-grey': leftMenu === 2}"
+             hx-trigger="click"
+             hx-get="{% url 'recurring' %}"
+             hx-target="#main-app"
+        >
+            🔁
         </div>
-        <div class="px-2 py-4 rounded-2xl {% if request.path == '/investments/' %}bg-middle-grey {% endif %}">
-            <a href="{% url 'investments' %}" class="text-5xl">
-                ➡
-            </a>
+        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
+             @click="leftMenu=3" :class="{'bg-middle-grey': leftMenu === 3}"
+             hx-trigger="click"
+             hx-get="{% url 'investments' %}"
+             hx-target="#main-app"
+        >
+            ➡
         </div>
-        <div class="px-2 py-4 rounded-2xl {% if request.path == '/liabilities/' %}bg-middle-grey {% endif %}">
-            <a href="{% url 'liabilities' %}" class="text-5xl">
-                ⬅
-            </a>
+        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
+             @click="leftMenu=4" :class="{'bg-middle-grey': leftMenu === 4}"
+             hx-trigger="click"
+             hx-get="{% url 'liabilities' %}"
+             hx-target="#main-app"
+        >
+            ⬅
         </div>
-        <div class="px-2 py-4 rounded-2xl {% if request.path == '/reminders/' %}bg-middle-grey {% endif %}">
-            <a href="{% url 'reminders' %}" class="text-5xl">
-                🔔
-            </a>
+        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
+             @click="leftMenu=5" :class="{'bg-middle-grey': leftMenu === 5}"
+             hx-trigger="click"
+             hx-get="{% url 'reminders' %}"
+             hx-target="#main-app"
+        >
+            🔔
         </div>
-        <div class="px-2 py-4 rounded-2xl {% if request.path == '/media/' %}bg-middle-grey {% endif %}">
-            <a href="{% url 'media' %}" class="text-5xl">
-                📦
-            </a>
+        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
+             @click="leftMenu=6" :class="{'bg-middle-grey': leftMenu === 6}"
+             hx-trigger="click"
+             hx-get="{% url 'media' %}"
+             hx-target="#main-app"
+        >
+            📦
         </div>
     </nav>
-    <main class="ml-4 grow bg-main-grey rounded-2xl p-2" hx-swap="outerHTML">
-        {% block content %}
-        {% endblock %}
+    <main class="ml-4 grow bg-main-grey rounded-2xl p-2"
+          id="main-app"
+          hx-swap="outerHTML"
+    >
+        {% include 'finance/ledger.html' %}
     </main>
 </div>
 <!-- Popup -->
-<div class="z-50 w-full h-full bg-popup-bg hidden fixed start-0" x-bind:style="{display: showPopup ? 'block' : 'none'}">
+<div class="z-50 w-full h-full bg-popup-bg hidden fixed start-0"
+     x-bind:style="{display: showPopup ? 'block' : 'none'}"
+>
     {% include 'finance/components/create_cash_flow.html' %}
 </div>
 {#<input type="checkbox" hidden="hidden" class="rounded hidden h-5 w-7">#}
