@@ -107,10 +107,11 @@
         </div>
     </nav>
     <main class="ml-4 grow bg-main-grey rounded-2xl p-2"
-          id="main-app"
           hx-swap="outerHTML"
     >
-        {% include 'finance/ledger.html' %}
+        <div id="main-app">
+             {% include 'finance/ledger.html' %}
+        </div>  
     </main>
 </div>
 <!-- Popup -->
