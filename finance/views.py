@@ -105,12 +105,16 @@ class CreateIO(CreateView):
     model = OneIO
     form_class = OneIOForm
     template_name = 'finance/forms/one_create.html'
-    success_url = reverse_lazy('ledger')
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'form': self.form_class})
+        is_outcome = self.kwargs.get('is_outcome')
+        context = {'form': self.form_class, 'is_outcome': is_outcome}
+        return render(request, self.template_name, context)
 
     def form_valid(self, form):
+        print( self.kwargs.get('is_outcome'))
+        form.instance.is_outcome = self.kwargs.get('is_outcome')
+
         form.save()
         form_html = render_to_string(self.template_name, {'form': self.form_class})
         return HttpResponse(form_html)

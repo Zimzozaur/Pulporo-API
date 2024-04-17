@@ -51,7 +51,7 @@ class ManagerIOForm(BaseIOForm):
 
 class OneIOForm(BaseIOForm):
     class Meta(BaseIOForm.Meta):
-        fields = BaseIOForm.Meta.fields + ['is_outcome', 'date', 'prediction']
+        fields = BaseIOForm.Meta.fields + ['date', 'prediction']
         model = OneIO
 
     date = forms.DateField(
@@ -72,19 +72,10 @@ class OneIOForm(BaseIOForm):
         })
     )
 
-    is_outcome = forms.BooleanField(
-        label=False,
-        initial=True,
-        help_text='Outcome',
-        widget=forms.CheckboxInput(attrs={
-            'class': 'rounded h-5 w-5'
-        })
-    )
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Reorder fields
-        field_order = ['title', 'is_outcome', 'value', 'date', 'prediction', 'notes']
+        field_order = ['title', 'value', 'date', 'prediction', 'notes']
         self.fields = OrderedDict((key, self.fields[key]) for key in field_order)
 
 

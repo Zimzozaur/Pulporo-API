@@ -30,7 +30,7 @@
     <div id="form-wrapper" class="flex flex-col w-[70%] self-center mt-4">
         <!-- Form is rendered here -->
         <div class="flex flex-col mt-4 flex-grow"
-             hx-get="{% url 'create-io' %}"
+             hx-get="{% url 'get-OneIO-form' 1 %}"
              hx-target="#form-wrapper"
              hx-swap="outerHTML"
              hx-trigger="click from:#submit-bt"

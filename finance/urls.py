@@ -19,7 +19,8 @@ urlpatterns = [
     path('media/', views.media, name='media'),
 
     # Actions on OneIO
-    path('create/oneio/', views.CreateIO.as_view(), name='create-io'),
+    path('get/oneio/<int:is_outcome>/', views.CreateIO.as_view(), name='get-OneIO-form'),
+    path('post/oneio/<int:is_outcome>/', views.CreateIO.as_view(), name='post-OneIO-form'),
     path('update/oneio/<int:pk>/', views.DetailIO.as_view(), name='detail-io'),
     path('delete/oneio/<int:pk>/', views.DeleteIO.as_view(), name='delete-io'),
 
