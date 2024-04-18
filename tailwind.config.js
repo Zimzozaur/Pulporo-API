@@ -7,6 +7,8 @@ module.exports = {
         'dark-grey': '#201F1F',
         'middle-grey': "#9D9C9C",
         'light-grey': '#D9D9D9',
+        'light-grey-shade-1': '#bcbcbc',
+        'light-grey-shade-2': '#a1a1a1',
         'main-grey': 'rgba(78, 76, 76, 0.75)',
         'purple': '#BAB0F8',
         'popup-bg': 'rgba(0, 0, 0, 0.5)',

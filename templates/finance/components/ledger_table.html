@@ -1,40 +1,51 @@
 <table id="TableIO" class="display">
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Value</th>
-        <th>Date</th>
+    <thead class="text-xl">
+    <tr class="">
+        <th class="px-2">
+            Title</th>
+        <th class="px-2 text-center">
+            Value</th>
+        <th class="px-2 text-center">
+            Date</th>
         {% if is_one_off != 'one-off' %}
-            <th>Manager</th>
+            <th class="px-2">
+                Manager</th>
         {% endif %}
-        <th>Notes</th>
+        <th class="px-2 text-left">
+            Notes</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="text-lg">
     {% for obj in object_list %}
-        <tr>
-            <td>
+        <tr class="{% cycle 'bg-light-grey-shade-1' 'bg-light-grey' %} hover:bg-blue-400 ">
+            <td class="pl-4 rounded-l-2xl px-2">
                 <a href="{% url 'detail-io' pk=obj.pk %}">{{ obj.title }}</a>
             </td>
-            <td>{% if is_outcome %}-{% endif %}{{ obj.value }}</td>
-            <td style="text-align: center">{{ obj.date|date:"d" }}</td>
+            <td class="px-2 text-center">
+                {% if is_outcome %}-{% endif %}{{ obj.value }}</td>
+            <td class="px-2 text-center">
+                {{ obj.date|date:"d" }}</td>
             {% if is_one_off != 'one-off' %}
-                <td>{{ obj.manager_id.title }}</td>
+                <td class="px-2"
+                ><a href="#">{{ obj.manager_id.title }}</a></td>
             {% endif %}
 
-            <td>{{ obj.notes }}</td>
+            <td class="rounded-r-2xl px-2 ">
+                {{ obj.notes }}</td>
         </tr>
     {% endfor %}
     </tbody>
-    <tfoot>
-    <tr>
-        <td><strong>Total</strong></td>
-        <td><strong>{% if is_outcome %}-{% endif %}{{ total_sum }}</strong></td>
+    <tfoot class="text-xl">
+    <tr class="">
+        <td class="px-2 text-right">
+            <strong>Total:</strong></td>
+        <td class="px-2 text-center">
+            {% if is_outcome %}-{% endif %}{{ total_sum }}</td>
         {% if is_one_off != 'one-off' %}
-            <td></td>
+            <td class="px-2"></td>
         {% endif %}
-        <td></td>
-        <td></td>
+        <td class="px-2"></td>
+        <td class="px-2"></td>
     </tr>
     </tfoot>
 </table>
