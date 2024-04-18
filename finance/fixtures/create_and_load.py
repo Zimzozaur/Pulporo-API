@@ -26,7 +26,7 @@ def create_fake_json() -> str:
                 'model': 'finance.oneio',
                 "fields": {
                     "is_outcome": is_out,
-                    "title": fake.sentence(),
+                    "title": fake.sentence()[:50],
                     "value": fake.random_int(min=min_int, max=max_int),
                     "manager_id": None,
                     "date": str_date,
