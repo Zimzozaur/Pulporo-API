@@ -16,7 +16,7 @@
 <body class="min-h-screen h-full bg-dark-grey p-3.5 flex flex-col"
       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
       x-data="{
-        showPopup: false,
+        showAddPopup: false,
         leftMenu: 1
       }
 ">
@@ -27,7 +27,7 @@
         </label>
         <div>
             <div class="bg-purple rounded-2xl self-center justify-self-center px-2 cursor-pointer h-7"
-                 @click="showPopup = true"
+                 @click="showAddPopup = true"
                  hx-get="{% url 'get-OneIO-form' 1 %}"
                  hx-target="#form-wrapper"
                  hx-trigger="intersect"
@@ -93,7 +93,7 @@
              hx-trigger="click"
              hx-get="{% url 'reminders' %}"
              hx-target="#main-app"
-        >   
+        >
             🔔
         </div>
         <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
@@ -109,13 +109,13 @@
           hx-swap="outerHTML"
     >
         <div id="main-app">
-             {% include 'finance/ledger.html' %}
+             {% include 'finance/pages/ledger.html' %}
         </div>  
     </main>
 </div>
 <!-- Popup -->
 <div class="z-50 w-full h-full bg-popup-bg hidden fixed start-0"
-     x-bind:style="{display: showPopup ? 'block' : 'none'}"
+     x-bind:style="{display: showAddPopup ? 'block' : 'none'}"
 >
     {% include 'finance/components/create_cash_flow_popup.html' %}
 </div>
