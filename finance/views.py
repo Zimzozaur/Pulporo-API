@@ -24,7 +24,7 @@ class ListIOs(ListView):
         print('GET_TEMPLATE_NAMES EXECUTED')
 
         if path == '/ledger/':
-            return ['finance/ledger.html']
+            return ['finance/pages/ledger.html']
         elif path == '/ledger/update-dom/':
             return ['finance/components/ledger_table.html']
 
@@ -95,7 +95,7 @@ class ListIOs(ListView):
 class DetailIO(UpdateView):
     model = OneIO
     # form_class = None
-    template_name = 'finance/one_detail.html'
+    template_name = 'finance/forms/create_OneIO_form.html'
 
     def get_success_url(self):
         return reverse_lazy('ledger')
@@ -104,7 +104,7 @@ class DetailIO(UpdateView):
 class CreateIO(CreateView):
     model = OneIO
     form_class = OneIOForm
-    template_name = 'finance/forms/one_create.html'
+    template_name = 'finance/forms/create_OneIO_form.html'
 
     def get(self, request, *args, **kwargs):
         is_outcome = self.kwargs.get('is_outcome')
@@ -131,24 +131,24 @@ class DeleteIO(DeleteView):
 
 
 def dashboard(request):
-    return HttpResponse(render_to_string('finance/dashboard.html'))
+    return HttpResponse(render_to_string('finance/pages/dashboard.html'))
 
 
 def recurring(request):
-    return render(request, 'finance/recurring.html')
+    return render(request, 'finance/pages/recurring.html')
 
 
 def investments(request):
-    return render(request, 'finance/investments.html')
+    return render(request, 'finance/pages/investments.html')
 
 
 def liabilities(request):
-    return render(request, 'finance/liabilities.html')
+    return render(request, 'finance/pages/liabilities.html')
 
 
 def reminders(request):
-    return render(request, 'finance/reminders.html')
+    return render(request, 'finance/pages/reminders.html')
 
 
 def media(request):
-    return render(request, 'finance/media.html')
+    return render(request, 'finance/pages/media.html')
