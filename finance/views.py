@@ -16,12 +16,28 @@ def load_base(request):
     return render(request, 'base.html')
 
 
+class CreateIO(CreateView):
+    model = OneIO
+    form_class = OneIOForm
+    template_name = 'finance/forms/create_OneIO_form.html'
+
+    def get(self, request, *args, **kwargs):
+        is_outcome = self.kwargs.get('is_outcome')
+        context = {'form': self.form_class, 'is_outcome': is_outcome}
+        return render(request, self.template_name, context)
+
+    def form_valid(self, form):
+        form.instance.is_outcome = self.kwargs.get('is_outcome')
+        form.save()
+        form_html = render_to_string(self.template_name, {'form': self.form_class})
+        return HttpResponse(form_html)
+
+
 class ListIOs(ListView):
     model = OneIO
 
     def get_template_names(self):
         path = self.request.path
-        print('GET_TEMPLATE_NAMES EXECUTED')
 
         if path == '/ledger/':
             return ['finance/pages/ledger.html']
@@ -31,7 +47,6 @@ class ListIOs(ListView):
         raise ValueError(f"No template found for path: {path}")
 
     def get_queryset(self):
-        print('GET_QUERYSET EXECUTED')
         queryset = super().get_queryset()
         year = int(self.request.COOKIES.get('ledger-year', timezone.now().year))
 
@@ -65,7 +80,6 @@ class ListIOs(ListView):
             )
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        print('GET_CONTEXT_DATA EXECUTED')
         context = super().get_context_data(**kwargs)
         queryset = self.get_queryset()
         total_sum = queryset.aggregate(total=Sum('value'))['total'] or 0
@@ -86,7 +100,6 @@ class ListIOs(ListView):
         return HttpResponse(render_to_string(self.get_template_names(), context))
 
     def post(self, request, *args, **kwargs):
-        print('POST EXECUTED')
         form = OneIOForm(request.POST)
         form.save()
         return redirect('ledger')
@@ -99,25 +112,6 @@ class DetailIO(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('ledger')
-
-
-class CreateIO(CreateView):
-    model = OneIO
-    form_class = OneIOForm
-    template_name = 'finance/forms/create_OneIO_form.html'
-
-    def get(self, request, *args, **kwargs):
-        is_outcome = self.kwargs.get('is_outcome')
-        context = {'form': self.form_class, 'is_outcome': is_outcome}
-        return render(request, self.template_name, context)
-
-    def form_valid(self, form):
-        print( self.kwargs.get('is_outcome'))
-        form.instance.is_outcome = self.kwargs.get('is_outcome')
-
-        form.save()
-        form_html = render_to_string(self.template_name, {'form': self.form_class})
-        return HttpResponse(form_html)
 
 
 class DeleteIO(DeleteView):
