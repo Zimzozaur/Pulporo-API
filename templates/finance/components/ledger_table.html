@@ -1,4 +1,7 @@
-<table id="TableIO" class="display">
+<div id="TableIO" 
+     x-data="{ledgerPopup: false}" 
+>
+<table  class="display">
     <thead class="text-xl">
     <tr class="">
         <th class="px-2">
@@ -18,8 +21,10 @@
     <tbody class="text-lg">
     {% for obj in object_list %}
         <tr class="{% cycle 'bg-light-grey-shade-1' 'bg-light-grey' %} hover:bg-blue-400 ">
-            <td class="pl-4 rounded-l-2xl px-2">
-                <a href="{% url 'detail-io' pk=obj.pk %}">{{ obj.title }}</a>
+            <td class="pl-4 rounded-l-2xl px-2"
+                @click="ledgerPopup = true"
+            >
+                {{ obj.title }}
             </td>
             <td class="px-2 text-center">
                 {% if is_outcome %}-{% endif %}{{ obj.value }}</td>
@@ -49,3 +54,10 @@
     </tr>
     </tfoot>
 </table>
+<!-- Detail Popup -->
+    <div class="z-50 w-full h-full bg-popup-bg hidden fixed start-0"
+         x-bind:style="{display: ledgerPopup ? 'block' : 'none'}"
+         
+    >
+    </div>
+</div>
