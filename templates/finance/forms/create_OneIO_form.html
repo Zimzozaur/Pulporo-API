@@ -1,13 +1,13 @@
-<form class="flex flex-col gap-2"
-hx-post="
-    {% if is_outcome %}
-        {% url 'post-OneIO-form' 1 %}
-    {% else %}
-        {% url 'post-OneIO-form' 0 %}
-    {% endif %}
-"
-hx-trigger="click from:#submit-bt"
-hx-on="this.remove()">
+<form class="flex flex-col gap-2" id="form"
+    hx-post="
+        {% if is_outcome %}
+            {% url 'post-OneIO-form' 1 %}
+        {% else %}
+            {% url 'post-OneIO-form' 0 %}
+        {% endif %}"
+    hx-trigger="click from:#submit-bt"
+    hx-on="this.remove()"
+>
     {{ form.title }}
     {{ form.value }}
     {{ form.date }}
@@ -17,3 +17,5 @@ hx-on="this.remove()">
     {{ form.notes }}
     <button class="bg-emerald-400 mt-4 ml-auto rounded-2xl text-xl px-3 py-1" id="submit-bt" type="submit">Submit All</button>
 </form>
+
+
