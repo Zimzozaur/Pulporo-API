@@ -2,4 +2,3 @@ idea/
 db.sqlite3
 node_modules/
 finance/fixtures/cash_flow_from_31_1_2023_to_now.json
-DjangoHelp.ipynb
