@@ -1,3 +1,4 @@
+<!-- POPUP WRAPPER -->
 <div class="rounded-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[51] bg-light-grey h-[70%] w-[35%] flex flex-col min-w-[700px] box-border" 
      x-data="{
         hide: false, 
@@ -5,6 +6,7 @@
         row2: 0
      }"
 >
+    <!-- POPUP HEADER -->
     <div class="flex flex-row items-center justify-center min-h-16">
         <h1 class="text-3xl">Choose action</h1>
         <div class="absolute top-0 right-0 w-16 h-16 cursor-pointer flex justify-center items-center rounded-tr-2xl rounded-bl-xl bg-close-bg hover:text-gray-100 hover:bg-red-500"
@@ -26,7 +28,6 @@
              hx-swap="outerHTML"
              hx-trigger="click from:#submit-bt"
         >
-
         </div>
     </div>
 </div>

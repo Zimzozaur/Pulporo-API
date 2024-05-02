@@ -17,9 +17,13 @@
       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
       x-data="{
         showAddPopup: false,
-        leftMenu: 1
+        leftMenu: 1,
+        updateLedger: function () {
+            return this.leftMenu === 1
+        }
       }
 ">
+<!-- TOP MENU BAR -->
 <header class="w-full h-10 bg-light-grey rounded-2xl py-1.5 flex flex-row items-center text-xl ">
     <div class="ml-4 gap-2.5 flex flex-row items-center">
         <label>
@@ -47,6 +51,7 @@
     </div>
 </header>
 <div class="mt-4 flex flex-row grow w-full">
+    <!-- LEFT MENU BAR -->
     <nav class="bg-light-grey rounded-2xl flex flex-col gap-2 pt-4">
         <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
              @click="leftMenu=0" :class="{'bg-middle-grey': leftMenu === 0}"
@@ -105,6 +110,7 @@
             📦
         </div>
     </nav>
+    <!-- MAIN APP WINDOW -->
     <main class="ml-4 grow bg-main-grey rounded-2xl p-2"
           hx-swap="outerHTML"
     >

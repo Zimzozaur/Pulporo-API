@@ -25,7 +25,12 @@
         }
     }'
      x-init="setCookie()">
-    <div class="flex flex-row grow gap-2 text-2xl">
+    <div class="flex flex-row">
+        
+    </div>
+    <!-- LEFT MENU LEDGER -->
+    <div class="flex flex-row flex-wrap grow gap-2 text-2xl">
+        <!-- INCOMES OUTCOMES -->
         <div class="rounded-2xl flex flex-row bg-light-grey">
             <button class="rounded-2xl py-1 px-2.5" id="incomes"
                     @click="isOutcome=false; setCookie()"
@@ -42,6 +47,7 @@
                     hx-target="#TableIO"
             >Outcomes</button>
         </div>
+        <!-- ONE-OFF / ALL / RECURRING -->
         <div class="rounded-2xl bg-light-grey flex flex-row gap-2">
             <button class="rounded-2xl py-1 px-2.5" id="one-off"
                     @click="isOneOff='one-off'; setCookie()"
@@ -66,15 +72,16 @@
             >Recurring</button>
         </div>
     </div>
-    <div class="flex grow gap-2">
+     <!-- RIGHT MENU LEDGER -->
+    <div class="flex flex-row flex-wrap grow gap-2">
         <div class="ml-auto flex flex-row gap-12">
-            <!-- Calendar Button -->
+            <!-- CALENDAR COMPONENT BUTTON -->
             <div class="rounded-2xl py-1 px-2.5 text-2xl bg-light-grey w-36 text-center relative cursor-pointer select-none"
                  x-text="monthsNames[month][0] + ' ' + year"
                  @click="calendarPopup = true"
             >
             </div>
-            <!-- Calendar Popup -->
+            <!-- CALENDAR POPUP -->
             <div class="absolute bg-light-grey border border-zinc-900/25 text-xl rounded-2xl mt-12 shadow-2xl"
                  x-show="calendarPopup"
                  @click.away="calendarPopup = false"
@@ -112,6 +119,7 @@
                 </div>
             </div>
         </div>
+        <!-- CHANGE MONTH OR TODAY -->
         <div class="flex flex-row gap-1.5 rounded-2xl bg-light-grey py-0.5 px-1.5">
             <button class="text-2xl"
                     @click="date.setMonth(date.getMonth() - 1); month=date.getMonth(); year=date.getFullYear(); setCookie()"
@@ -135,6 +143,7 @@
         </div>
     </div>
 </div>
+<!-- LEDGER TABLE -->
 <div id="table-wrapper" class="bg-light-grey rounded-2xl mt-2 py-2 px-4"
      hx-trigger="load"
      hx-get="{% url 'ledger-update' %}"
