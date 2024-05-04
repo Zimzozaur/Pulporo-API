@@ -1,9 +1,0 @@
-{
-  "scripts": {
-    "tail": "tailwindcss -i static/css/tail-in.css -o static/css/tail-out.css --watch"
-  },
-  "devDependencies": {
-    "@tailwindcss/forms": "^0.5.7",
-    "tailwindcss": "^3.4.3"
-  }
-}
