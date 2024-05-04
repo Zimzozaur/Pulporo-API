@@ -1,131 +1,14 @@
 {% load static %}
-{% load django_htmx %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <title>Pulporo &#128025;</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="description" content="" />
+    <meta name="description" content=""/>
     <link rel="icon" href="{% static 'png/favicon.png' %}">
-    <link rel="stylesheet" href="{% static 'css/tail-out.css' %}">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
-
 </head>
-<body class="min-h-screen h-full bg-dark-grey p-3.5 flex flex-col"
-      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-      x-data="{
-        showAddPopup: false,
-        leftMenu: 1,
-        updateLedger: function () {
-            return this.leftMenu === 1
-        }
-      }
-">
-<!-- TOP MENU BAR -->
-<header class="w-full h-10 bg-light-grey rounded-2xl py-1.5 flex flex-row items-center text-xl ">
-    <div class="ml-4 gap-2.5 flex flex-row items-center">
-        <label>
-            <input autocomplete="off" type="search" placeholder="Search 🔍" class="rounded-2xl bg-purple text-xl text-black placeholder:text-black border-none h-7 ">
-        </label>
-        <div>
-            <div class="bg-purple rounded-2xl self-center justify-self-center px-2 cursor-pointer h-7"
-                 @click="showAddPopup = true"
-                 hx-get="{% url 'get-OneIO-form' 1 %}"
-                 hx-target="#form-wrapper"
-                 hx-trigger="intersect"
-            >Add ➕</div>
-        </div>
-    </div>
-    <div class="gap-5 grow-[3] flex flex-row justify-center">
-        <div class="bg-purple rounded-2xl px-2 text-xl">400 days 🏃🏿</div>
-        <div class="bg-purple rounded-2xl px-2 text-xl">100K 💰</div>
-        <div class="bg-purple rounded-2xl px-2 text-xl">1.7 mln 💸</div>
-        <div class="bg-purple rounded-2xl px-2 text-xl">23K 🏦</div>
-    </div>
-    <div class="bg-purple rounded-2xl px-2 text-xl mr-3">
-        <a href="#">
-            <div class="">Settings 🎨</div>
-        </a>
-    </div>
-</header>
-<div class="mt-4 flex flex-row grow w-full">
-    <!-- LEFT MENU BAR -->
-    <nav class="bg-light-grey rounded-2xl flex flex-col gap-2 pt-4">
-        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
-             @click="leftMenu=0" :class="{'bg-middle-grey': leftMenu === 0}"
-             hx-trigger="click"
-             hx-get="{% url 'dashboard' %}"
-             hx-target="#main-app"
-        >
-            📊
-        </div>
-        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
-             @click="leftMenu=1" :class="{'bg-middle-grey': leftMenu === 1}"
-             hx-trigger="click"
-             hx-get="{% url 'ledger' %}"
-             hx-target="#main-app"
-        >
-            📖
-        </div>
-        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
-             @click="leftMenu=2" :class="{'bg-middle-grey': leftMenu === 2}"
-             hx-trigger="click"
-             hx-get="{% url 'recurring' %}"
-             hx-target="#main-app"
-        >
-            🔁
-        </div>
-        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
-             @click="leftMenu=3" :class="{'bg-middle-grey': leftMenu === 3}"
-             hx-trigger="click"
-             hx-get="{% url 'investments' %}"
-             hx-target="#main-app"
-        >
-            ➡
-        </div>
-        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
-             @click="leftMenu=4" :class="{'bg-middle-grey': leftMenu === 4}"
-             hx-trigger="click"
-             hx-get="{% url 'liabilities' %}"
-             hx-target="#main-app"
-        >
-            ⬅
-        </div>
-        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
-             @click="leftMenu=5" :class="{'bg-middle-grey': leftMenu === 5}"
-             hx-trigger="click"
-             hx-get="{% url 'reminders' %}"
-             hx-target="#main-app"
-        >
-            🔔
-        </div>
-        <div class="px-2 py-4 rounded-2xl text-5xl cursor-pointer"
-             @click="leftMenu=6" :class="{'bg-middle-grey': leftMenu === 6}"
-             hx-trigger="click"
-             hx-get="{% url 'media' %}"
-             hx-target="#main-app"
-        >
-            📦
-        </div>
-    </nav>
-    <!-- MAIN APP WINDOW -->
-    <main class="ml-4 grow bg-main-grey rounded-2xl p-2"
-          hx-swap="outerHTML"
-    >
-        <div id="main-app">
-             {% include 'finance/pages/ledger.html' %}
-        </div>  
-    </main>
-</div>
-<!-- Popup -->
-<div class="z-50 w-full h-full bg-popup-bg hidden fixed start-0"
-     x-bind:style="{display: showAddPopup ? 'block' : 'none'}"
->
-    {% include 'finance/components/create_CashFlow_popup.html' %}
-</div>
-{#<input type="checkbox" hidden="hidden" class="rounded hidden h-5 w-7">#}
-{#<textarea class="hidden class': 'text-xl px-4 py-2 rounded-2xl h-16 min-h-16 max-h-32"></textarea>#}
+<body style="background-color: darkgrey">
+    <h1>Use CLI app</h1>
 </body>
 </html>
