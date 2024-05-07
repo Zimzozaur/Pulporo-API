@@ -65,7 +65,7 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
     ```
 7. Create a fixture and load data to db 
     ```
-   python manage.py create_load_fake
+   python manage.py load_fixture_now
     ```
 8. Run app in browser
    ```

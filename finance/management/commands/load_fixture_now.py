@@ -1,7 +1,31 @@
+import os
+import subprocess
 import calendar
 import json
 from datetime import datetime
 from faker import Faker
+
+from django.core.management.base import BaseCommand
+
+
+class Command(BaseCommand):
+    help = 'Create a fixture and loads it to DB - Do not use in production'
+
+    def handle(self, *args, **options):
+        file_path = 'finance/fixtures/cash_flow_from_31_1_2023_to_now.json'
+        if os.path.exists(file_path):
+            with open(file_path, 'w'):
+                pass
+
+        fake_json = create_fake_json()
+        with open(file_path, 'w') as file:
+            file.write(fake_json)
+
+        try:
+            subprocess.run(['python', 'manage.py', 'loaddata', file_path], check=True)
+            self.stdout.write(self.style.SUCCESS('Data loaded successfully.'))
+        except subprocess.CalledProcessError as e:
+            self.stdout.write(self.style.ERROR(f'Error loading fixture: {e}'))
 
 
 def create_fake_json() -> str:
@@ -53,3 +77,5 @@ def create_fake_json() -> str:
         print(f"Created: {start_year}-{start_month}")
 
     return json.dumps(json_list, indent=2)
+
+
