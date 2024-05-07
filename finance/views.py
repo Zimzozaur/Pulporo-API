@@ -1,3 +1,6 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
@@ -11,10 +14,16 @@ from .models import OneIO
 from .forms import OneIOForm
 
 
-@require_GET
-def load_base(request):
-    return render(request, 'base.html')
+class ImagesURLs(APIView):
+    JSON = {
+        1: "https://www.apple.com/v/mac-studio/f/images/overview/hero/static_front__fmvxob6uyxiu_large.jpg",
+        2: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mac-pro-tower-hero-splitter-2023?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1684181485853",
+        3: "https://www.apple.com/v/displays/a/images/overview/hero/hero__fkyiyagbj7yy_large.jpg",
+        4: "https://www.apple.com/v/displays/a/images/overview/routers/mac_for_you__95lbzl9lp36e_large.jpg",
+    }
 
+    def get(self, request):
+        return Response(self.JSON)
 
 class CreateIO(CreateView):
     model = OneIO
