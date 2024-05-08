@@ -42,19 +42,16 @@ def create_fake_json() -> str:
     start_month = 1
     json_list = []
 
-    def create_outcomes_incomes(min_qty, max_qty, is_out, min_int, max_int):
+    def create_outcomes_incomes(min_qty, max_qty, table_name, min_int, max_int):
         max_days = calendar.monthrange(start_year, start_month)[1]
         for _ in range(fake.random_int(min=min_qty, max=max_qty)):
             str_date = f'{start_year}-{start_month:02d}-{fake.random_int(min=1, max=max_days)}'
             json_list.append({
-                'model': 'finance.oneio',
+                'model': f'finance.{table_name}',
                 "fields": {
-                    "is_outcome": is_out,
                     "title": fake.sentence()[:50],
                     "value": fake.random_int(min=min_int, max=max_int),
-                    "manager_id": None,
                     "date": str_date,
-                    "prediction": is_out,
                     "notes": fake.paragraph(nb_sentences=5),
                     "creation_date": f"{str_date}T00:00:00Z",
                     "last_modification": f"{str_date}T00:00:00Z"
@@ -63,9 +60,9 @@ def create_fake_json() -> str:
 
     while True:
         # Expense
-        create_outcomes_incomes(25, 50, True, 1, 1000)
+        create_outcomes_incomes(25, 50, 'outflow', 1, 1000)
         # Income
-        create_outcomes_incomes(2, 5, False, 500, 5000)
+        create_outcomes_incomes(2, 5, 'inflow', 500, 5000)
 
         start_month += 1
         if start_month > 12:

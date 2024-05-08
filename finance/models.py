@@ -25,21 +25,29 @@ class ManagerIO(models.Model):
     last_modification = models.DateTimeField(auto_now=True)
 
 
-class OneIO(models.Model):
+class BaseIO(models.Model):
     title = models.CharField(max_length=50)
-    is_outcome = models.BooleanField(default=True)
     value = models.DecimalField(max_digits=17, decimal_places=2)
-    manager_id = models.ForeignKey(ManagerIO, on_delete=models.SET_NULL, null=True)
     date = models.DateField()
-    prediction = models.BooleanField(default=True)
-    # cash_tag_id = models.ForeignKey(CashTag, on_delete=models.SET_NULL, null=True)
-    # company_id = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
     notes = models.TextField(blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_modification = models.DateTimeField(auto_now=True)
+    # manager_id = models.ForeignKey(ManagerIO, on_delete=models.SET_NULL, null=True)
 
     class Meta:
+        abstract = True
         ordering = ['-date', '-value']
+
+
+class Outflow(BaseIO):
+    prediction = models.BooleanField(default=True)
+
+
+class Inflow(BaseIO):
+    pass
+
+
+
 
 
 
