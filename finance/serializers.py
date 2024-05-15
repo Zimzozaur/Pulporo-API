@@ -1,18 +1,17 @@
 from rest_framework import serializers
 
-
-class BaseIOSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=50)
-    value = serializers.DecimalField(max_digits=17, decimal_places=2)
-    date = serializers.DateField()
-    notes = serializers.CharField(allow_blank=True)
+from .models import Outflow, Inflow
 
 
-class OutflowSerializer(BaseIOSerializer):
-    prediction = serializers.BooleanField(default=True)
+class OutflowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Outflow
+        fields = ['title', 'value', 'date', 'prediction', 'notes']
 
 
-class InflowSerializer(BaseIOSerializer):
-    pass
+class InflowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Outflow
+        fields = ['title', 'value', 'date', 'notes']
 
 
