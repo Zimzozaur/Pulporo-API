@@ -35,7 +35,7 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
 ### Project Setup (Under 1 min)
 1. Clone this project
    ``` bash
-   git clone https://github.com/Zimzozaur/Pulporo.git
+   git clone https://github.com/Zimzozaur/Pulporo-API
    ```
 2. Move to project
     ```
