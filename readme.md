@@ -39,7 +39,7 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
    ```
 2. Move to project
     ```
-    cd Pulporo
+    cd Pulporo-API
     ```
 3. Create virtual env in project directory 
    ```
