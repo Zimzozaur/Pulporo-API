@@ -1,4 +1,11 @@
-Django~=5.0.4
-django-debug-toolbar~=4.3.0
 Faker~=24.4.0
+mypy~=1.10.0
+pytest~=8.2.1
+
+Django~=5.0.4
 djangorestframework~=3.15.1
+
+django-stubs~=5.0.0
+pytest-django~=4.8.0
+pytest-mypy-plugins~=3.1.2
+
