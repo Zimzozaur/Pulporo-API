@@ -9,10 +9,8 @@ urlpatterns = [
     # Actions on OneIO
 
 
-    path('outflows/', views.ListOutflows.as_view()),
-    path('inflows/', views.ListInflows.as_view())
-
-
+    path('outflows/', views.OneOffOutflowsView.as_view(), name='outflows'),
+    path('inflows/', views.OneOffInflowsView.as_view(), name='inflows')
 ]
 
 
