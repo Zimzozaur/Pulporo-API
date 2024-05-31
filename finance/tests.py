@@ -4,6 +4,7 @@ import pytest
 
 from django.urls import reverse
 from django.utils import timezone
+from django.db.models.query import QuerySet
 
 from rest_framework.test import APIClient
 from rest_framework.response import Response
@@ -51,6 +52,11 @@ class TestOneOffOutflowsView:
         response: Response = self.api_client.get(self.url, params)
         assert response.data == []
 
+    def test_post_request(self):
+        self.api_client.post(self.url, self.example_fixture)
+        queryset: QuerySet = Outflow.objects.all()
+        assert len(queryset) == 1
+
 
 @pytest.mark.django_db
 class TestOneInflowsView:
@@ -90,3 +96,10 @@ class TestOneInflowsView:
         }
         response: Response = self.api_client.get(self.url, params)
         assert response.data == []
+
+    def test_post_request(self):
+        self.api_client.post(self.url, self.example_fixture)
+        queryset: QuerySet = Outflow.objects.all()
+        assert len(queryset) == 1
+
+
