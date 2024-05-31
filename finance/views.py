@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import (
-    ListCreateAPIView, CreateAPIView
+    ListCreateAPIView
 )
 
 from django.utils import timezone
@@ -52,8 +52,9 @@ class OneOffInflowsView(FlowsBaseView):
     serializer_class = InflowSerializer
 
 
-class OneOffOutflowsView(FlowsBaseView, CreateAPIView):
+class OneOffOutflowsView(FlowsBaseView):
     """Return list of Outflows"""
     model = Outflow
     serializer_class = OutflowSerializer
+
 
