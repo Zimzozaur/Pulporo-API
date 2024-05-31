@@ -99,7 +99,7 @@ class TestOneInflowsView:
 
     def test_post_request(self):
         self.api_client.post(self.url, self.example_fixture)
-        queryset: QuerySet = Outflow.objects.all()
+        queryset: QuerySet = Inflow.objects.all()
         assert len(queryset) == 1
 
 
