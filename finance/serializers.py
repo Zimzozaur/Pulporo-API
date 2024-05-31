@@ -11,7 +11,7 @@ class OutflowSerializer(serializers.ModelSerializer):
 
 class InflowSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Outflow
+        model = Inflow
         fields = ['title', 'value', 'date', 'notes']
 
 
