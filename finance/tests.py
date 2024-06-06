@@ -12,6 +12,9 @@ from rest_framework.response import Response
 from .models import Outflow, Inflow
 
 
+EXCLUDED_KEYS = ['creation_date', 'last_modification', 'id']
+
+
 def extract_and_clean_dict(response: Response, keys_to_remove: list) -> dict:
     """
     Extracts the first item from the API response data and removes specified keys from it.
@@ -38,7 +41,7 @@ class TestOneOffOutflowsView:
         'prediction': True,
         'notes': ''
     }
-    excluded_keys = ['creation_date', 'last_modification', 'id']
+
     api_client: APIClient = APIClient()
 
     def test_get_request_empty_DB(self) -> None:
@@ -49,7 +52,7 @@ class TestOneOffOutflowsView:
     def test_get_request_one_record_DB(self) -> None:
         Outflow.objects.create(**self.example_fixture)
         response: Response = self.api_client.get(self.url)
-        cleaned_result: dict = extract_and_clean_dict(response, self.excluded_keys)
+        cleaned_result: dict = extract_and_clean_dict(response, EXCLUDED_KEYS)
         assert cleaned_result == self.example_fixture
 
     def test_get_request_one_record_DB_current_date(self) -> None:
@@ -59,7 +62,8 @@ class TestOneOffOutflowsView:
             'month': timezone.now().month
         }
         response: Response = self.api_client.get(self.url, params)
-        assert response.data == [self.example_fixture]
+        cleaned_result: dict = extract_and_clean_dict(response, EXCLUDED_KEYS)
+        assert cleaned_result == self.example_fixture
 
     def test_get_request_one_record_DB_not_current(self) -> None:
         Outflow.objects.create(**self.example_fixture)
@@ -95,7 +99,8 @@ class TestOneInflowsView:
     def test_get_request_one_record_DB(self) -> None:
         Inflow.objects.create(**self.example_fixture)
         response: Response = self.api_client.get(self.url)
-        assert response.data == [self.example_fixture]
+        cleaned_result: dict = extract_and_clean_dict(response, EXCLUDED_KEYS)
+        assert cleaned_result == self.example_fixture
 
     def test_get_request_one_record_DB_current_date(self) -> None:
         Inflow.objects.create(**self.example_fixture)
@@ -104,7 +109,8 @@ class TestOneInflowsView:
             'month': timezone.now().month
         }
         response: Response = self.api_client.get(self.url, params)
-        assert response.data == [self.example_fixture]
+        cleaned_result: dict = extract_and_clean_dict(response, EXCLUDED_KEYS)
+        assert cleaned_result == self.example_fixture
 
     def test_get_request_one_record_DB_not_current(self) -> None:
         Inflow.objects.create(**self.example_fixture)
