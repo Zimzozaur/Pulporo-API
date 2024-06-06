@@ -1,18 +1,35 @@
+from rest_framework import mixins
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.views import APIView
+from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.generics import (
-    RetrieveUpdateDestroyAPIView,
-    ListCreateAPIView, UpdateAPIView, DestroyAPIView, GenericAPIView
+    ListCreateAPIView, GenericAPIView
 )
 
-from drf_spectacular.utils import extend_schema, OpenApiResponse
-
 from django.utils import timezone
-from django.db.models import QuerySet, Model
+from django.db.models import QuerySet
 
 from .models import Outflow, Inflow
 from . import serializers
+
+
+class GetPatchDeleteAPIView(mixins.RetrieveModelMixin,
+                            mixins.UpdateModelMixin,
+                            mixins.DestroyModelMixin,
+                            GenericAPIView):
+    """
+    Concrete view for retrieving, updating or deleting a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
 class ImagesURLs(APIView):
@@ -28,7 +45,7 @@ class ImagesURLs(APIView):
         return Response(self.JSON)
 
 
-class ListCreateOneBaseView(ListCreateAPIView):
+class ListPostOneBaseView(ListCreateAPIView):
     """Base class for Inflows and Outflows to return list of them"""
     model = None
     serializer_class = None
@@ -49,28 +66,29 @@ class ListCreateOneBaseView(ListCreateAPIView):
         return res
 
 
-class RetrieveUpdateDestroyOneBaseView(RetrieveUpdateDestroyAPIView):
+class GetPutDeleteOneBaseView(GetPatchDeleteAPIView):
     queryset = None
     serializer_class = None
 
 
-class ListCreateOutflows(ListCreateOneBaseView):
+class ListPostOutflows(ListPostOneBaseView):
     """Return list of Outflows"""
     model = Outflow
     serializer_class = serializers.OutflowListSerializer
 
 
-class ListCreateInflows(ListCreateOneBaseView):
+class ListPostInflows(ListPostOneBaseView):
     """Return list of Inflows"""
     model = Inflow
     serializer_class = serializers.InflowListSerializer
 
 
-class ReadUpdateDeleteOutflows(RetrieveUpdateDestroyOneBaseView):
+class ReadUpdateDeleteOutflows(GetPutDeleteOneBaseView):
     queryset = Outflow.objects.all()
     serializer_class = serializers.OutflowFullSerializer
 
 
-class ReadUpdateDeleteInflows(RetrieveUpdateDestroyOneBaseView):
+class ReadUpdateDeleteInflows(GetPutDeleteOneBaseView):
     queryset = Inflow.objects.all()
     serializer_class = serializers.InflowFullSerializer
+
