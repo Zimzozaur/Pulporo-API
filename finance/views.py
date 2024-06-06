@@ -1,4 +1,5 @@
-from rest_framework.serializers import Serializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
     ListCreateAPIView, UpdateAPIView, DestroyAPIView
@@ -14,10 +15,22 @@ from .serializers import (
 )
 
 
+class ImagesURLs(APIView):
+    JSON = {
+        1: "https://www.apple.com/v/mac-studio/f/images/overview/hero/static_front__fmvxob6uyxiu_large.jpg",
+        2: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mac-pro-tower-hero-splitter-2023?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1684181485853",
+        3: "https://www.apple.com/v/displays/a/images/overview/hero/hero__fkyiyagbj7yy_large.jpg",
+        4: "https://www.apple.com/v/displays/a/images/overview/routers/mac_for_you__95lbzl9lp36e_large.jpg",
+    }
+
+    def get(self, request):
+        return Response(self.JSON)
+
+
 class ListCreateFlowsBaseView(ListCreateAPIView):
     """Base class for Inflows and Outflows to return list of them"""
-    model = Model
-    serializer_class = Serializer
+    model = None
+    serializer_class = None
 
     def get_queryset(self) -> QuerySet:
         if self.model is None:
