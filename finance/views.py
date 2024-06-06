@@ -1,4 +1,5 @@
 from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework.views import APIView
 from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
@@ -9,25 +10,23 @@ from django.utils import timezone
 from django.db.models import QuerySet, Model
 
 from .models import Outflow, Inflow
-from .serializers import (
-    OutflowSerializer,
-    InflowSerializer,
-)
+from . import serializers
 
 
 class ImagesURLs(APIView):
     JSON = {
         1: "https://www.apple.com/v/mac-studio/f/images/overview/hero/static_front__fmvxob6uyxiu_large.jpg",
-        2: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mac-pro-tower-hero-splitter-2023?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1684181485853",
+        2: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mac-pro-tower-hero-splitter-2023?wid"
+           "=904&hei=840&fmt=jpeg&qlt=90&.v=1684181485853",
         3: "https://www.apple.com/v/displays/a/images/overview/hero/hero__fkyiyagbj7yy_large.jpg",
         4: "https://www.apple.com/v/displays/a/images/overview/routers/mac_for_you__95lbzl9lp36e_large.jpg",
     }
 
-    def get(self, request):
+    def get(self, request: Request) -> Response:
         return Response(self.JSON)
 
 
-class ListCreateFlowsBaseView(ListCreateAPIView):
+class ListCreateOneBaseView(ListCreateAPIView):
     """Base class for Inflows and Outflows to return list of them"""
     model = None
     serializer_class = None
@@ -48,23 +47,30 @@ class ListCreateFlowsBaseView(ListCreateAPIView):
         return res
 
 
-class ListCreateOutflows(ListCreateFlowsBaseView):
+class RetrieveUpdateDestroyOneBaseView(RetrieveUpdateDestroyAPIView):
+    queryset = None
+    serializer_class = None
+
+
+class ListCreateOutflows(ListCreateOneBaseView):
     """Return list of Outflows"""
     model = Outflow
-    serializer_class = OutflowSerializer
+    serializer_class = serializers.OutflowListSerializer
 
 
-class ListCreateInflows(ListCreateFlowsBaseView):
+class ListCreateInflows(ListCreateOneBaseView):
     """Return list of Inflows"""
     model = Inflow
-    serializer_class = InflowSerializer
+    serializer_class = serializers.InflowListSerializer
 
 
-class ReadUpdateDeleteOutflows(RetrieveUpdateDestroyAPIView):
+class ReadUpdateDeleteOutflows(RetrieveUpdateDestroyOneBaseView):
     queryset = Outflow.objects.all()
-    serializer_class = OutflowSerializer
+    serializer_class = serializers.OutflowFullSerializer
 
 
-
+class ReadUpdateDeleteInflows(RetrieveUpdateDestroyOneBaseView):
+    queryset = Inflow.objects.all()
+    serializer_class = serializers.InflowFullSerializer
 
 
