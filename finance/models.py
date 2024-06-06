@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 class Company(models.Model):
@@ -16,7 +16,7 @@ class ManagerIO(models.Model):
     is_outcome = models.BooleanField(default=True, editable=False)
     value = models.DecimalField(max_digits=17, decimal_places=2)
     interval_start = models.DateField()
-    interval_end = models.DateField(null=True)
+    interval_end = models.DateField(null=True, blank=True)
     interval = models.CharField(max_length=30)
     # cash_tag_id = models.ForeignKey(CashTag, on_delete=models.SET_NULL, null=True)
     # company_id = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
@@ -45,7 +45,6 @@ class Outflow(BaseIO):
 
 class Inflow(BaseIO):
     pass
-
 
 
 

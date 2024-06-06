@@ -3,15 +3,15 @@ from rest_framework import serializers
 from .models import Outflow, Inflow
 
 
-class OutflowSerializer(serializers.ModelSerializer):
+class OutflowSerializer(serializers.ModelSerializer[Outflow]):
     class Meta:
         model = Outflow
-        fields = ['title', 'value', 'date', 'prediction', 'notes']
+        fields = ['id', 'title', 'value', 'date', 'prediction', 'notes', 'creation_date', 'last_modification']
 
 
-class InflowSerializer(serializers.ModelSerializer):
+class InflowSerializer(serializers.ModelSerializer[Inflow]):
     class Meta:
         model = Inflow
-        fields = ['title', 'value', 'date', 'notes']
+        fields = ['id', 'title', 'value', 'date', 'notes', 'creation_date', 'last_modification']
 
 

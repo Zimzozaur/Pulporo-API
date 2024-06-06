@@ -11,7 +11,7 @@ from django.core.management.base import BaseCommand
 class Command(BaseCommand):
     help = 'Create a fixture and loads it to DB - Do not use in production'
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options) -> None:
         file_path = 'finance/fixtures/cash_flow_from_31_1_2023_to_now.json'
         if os.path.exists(file_path):
             with open(file_path, 'w'):
@@ -42,7 +42,7 @@ def create_fake_json() -> str:
     start_month = 1
     json_list = []
 
-    def create_outcomes_incomes(min_qty, max_qty, table_name, min_int, max_int):
+    def create_outcomes_incomes(min_qty: int, max_qty: int, table_name: str, min_int: int, max_int: int) -> None:
         max_days = calendar.monthrange(start_year, start_month)[1]
         for _ in range(fake.random_int(min=min_qty, max=max_qty)):
             str_date = f'{start_year}-{start_month:02d}-{fake.random_int(min=1, max=max_days)}'
