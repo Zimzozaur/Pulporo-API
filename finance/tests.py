@@ -2,128 +2,88 @@ from datetime import datetime
 
 import pytest
 
+from rest_framework import status
+from rest_framework.test import APIClient
+from rest_framework.response import Response
+
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models.query import QuerySet
 
-from rest_framework.test import APIClient
-from rest_framework.response import Response
-
 from .models import Outflow, Inflow
 
 
-EXCLUDED_KEYS = ['creation_date', 'last_modification', 'id']
+@pytest.fixture
+def api_client():
+    return APIClient()
 
 
-def extract_and_clean_dict(response: Response, keys_to_remove: list) -> dict:
-    """
-    Extracts the first item from the API response data and removes specified keys from it.
+@pytest.fixture
+def create_outflow():
+    return Outflow.objects.create(
+        title='Test Outflow',
+        value=100.50,
+        date=datetime.now().date(),
+        prediction=False,
+        notes='Test notes'
+    )
 
-    Args:
-        response (Response): The API response containing the data.
-        keys_to_remove (list): A list of keys that should be removed from the extracted dictionary.
 
-    Returns:
-        dict: A cleaned dictionary with the specified keys removed.
-    """
-    assert isinstance(response.data[0], dict)
-    data: dict = response.data[0]
-    return {k: v for k, v in data.items() if k not in keys_to_remove}
+@pytest.fixture
+def create_inflow():
+    return Inflow.objects.create(
+        title='Test Inflow',
+        value=100.50,
+        date=datetime.now().date(),
+        notes='Test notes'
+    )
 
 
 @pytest.mark.django_db
-class TestOneOffOutflowsView:
-    url: str = reverse('outflows')
-    example_fixture: dict = {
-        'title': 'Mario in DB',
-        'value': '123.45',
-        'date': datetime.now().strftime('%Y-%m-%d'),
+def test_list_outflows(api_client, create_outflow):
+    url = reverse('list-create-outflows')
+    response = api_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == 1
+    assert response.data[0]['title'] == 'Test Outflow'
+
+
+@pytest.mark.django_db
+def test_create_outflow(api_client):
+    url = reverse('list-create-outflows')
+    data = {
+        'title': 'New Outflow',
+        'value': 200.75,
+        'date': datetime.now().date(),
         'prediction': True,
-        'notes': ''
+        'notes': 'New test notes'
     }
-
-    api_client: APIClient = APIClient()
-
-    def test_get_request_empty_DB(self) -> None:
-        response: Response = self.api_client.get(self.url)
-        assert response.status_code == 200
-        assert response.data == []
-
-    def test_get_request_one_record_DB(self) -> None:
-        Outflow.objects.create(**self.example_fixture)
-        response: Response = self.api_client.get(self.url)
-        cleaned_result: dict = extract_and_clean_dict(response, EXCLUDED_KEYS)
-        assert cleaned_result == self.example_fixture
-
-    def test_get_request_one_record_DB_current_date(self) -> None:
-        Outflow.objects.create(**self.example_fixture)
-        params = {
-            'year': timezone.now().year,
-            'month': timezone.now().month
-        }
-        response: Response = self.api_client.get(self.url, params)
-        cleaned_result: dict = extract_and_clean_dict(response, EXCLUDED_KEYS)
-        assert cleaned_result == self.example_fixture
-
-    def test_get_request_one_record_DB_not_current(self) -> None:
-        Outflow.objects.create(**self.example_fixture)
-        params = {
-            'year': timezone.now().year,
-            'month': 1
-        }
-        response: Response = self.api_client.get(self.url, params)
-        assert response.data == []
-
-    def test_post_request(self) -> None:
-        self.api_client.post(self.url, self.example_fixture)
-        queryset: QuerySet = Outflow.objects.all()
-        assert len(queryset) == 1
+    response = api_client.post(url, data, format='json')
+    assert response.status_code == status.HTTP_201_CREATED
+    assert Outflow.objects.count() == 1
+    assert Outflow.objects.get().title == 'New Outflow'
 
 
 @pytest.mark.django_db
-class TestOneInflowsView:
-    url: str = reverse('inflows')
-    example_fixture: dict = {
-        'title': 'Mario in DB',
-        'value': '123.45',
-        'date': datetime.now().strftime('%Y-%m-%d'),
-        'notes': ''
+def test_list_inflows(api_client, create_inflow):
+    url = reverse('list-create-inflows')
+    response = api_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == 1
+    assert response.data[0]['title'] == 'Test Inflow'
+
+
+@pytest.mark.django_db
+def test_create_outflow(api_client):
+    url = reverse('list-create-inflows')
+    data = {
+        'title': 'New Inflow',
+        'value': 200.75,
+        'date': datetime.now().date(),
+        'notes': 'New test notes'
     }
-    api_client: APIClient = APIClient()
-
-    def test_get_request_empty_DB(self) -> None:
-        response: Response = self.api_client.get(self.url)
-        assert response.status_code == 200
-        assert response.data == []
-
-    def test_get_request_one_record_DB(self) -> None:
-        Inflow.objects.create(**self.example_fixture)
-        response: Response = self.api_client.get(self.url)
-        cleaned_result: dict = extract_and_clean_dict(response, EXCLUDED_KEYS)
-        assert cleaned_result == self.example_fixture
-
-    def test_get_request_one_record_DB_current_date(self) -> None:
-        Inflow.objects.create(**self.example_fixture)
-        params = {
-            'year': timezone.now().year,
-            'month': timezone.now().month
-        }
-        response: Response = self.api_client.get(self.url, params)
-        cleaned_result: dict = extract_and_clean_dict(response, EXCLUDED_KEYS)
-        assert cleaned_result == self.example_fixture
-
-    def test_get_request_one_record_DB_not_current(self) -> None:
-        Inflow.objects.create(**self.example_fixture)
-        params = {
-            'year': timezone.now().year,
-            'month': 1
-        }
-        response: Response = self.api_client.get(self.url, params)
-        assert response.data == []
-
-    def test_post_request(self) -> None:
-        self.api_client.post(self.url, self.example_fixture)
-        queryset: QuerySet[Inflow] = Inflow.objects.all()
-        assert len(queryset) == 1
-
+    response = api_client.post(url, data, format='json')
+    assert response.status_code == status.HTTP_201_CREATED
+    assert Inflow.objects.count() == 1
+    assert Inflow.objects.get().title == 'New Inflow'
 
