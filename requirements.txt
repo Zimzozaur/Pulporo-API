@@ -1,12 +1,14 @@
 Faker~=24.4.0
 mypy~=1.10.0
 pytest~=8.2.1
+pyyaml~=6.0.1
 
 Django~=5.0.4
 django-stubs~=5.0.0
 
 djangorestframework~=3.15.1
 djangorestframework-stubs~=3.15.0
+drf-spectacular~=0.27.2
 
 pytest-django~=4.8.0
 pytest-mypy-plugins~=3.1.2

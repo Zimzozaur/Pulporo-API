@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # Rest Framework
     'rest_framework',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -139,5 +140,16 @@ INTERNAL_IPS = [
     # ...
 ]
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Pulporo API',
+    'DESCRIPTION': 'Your Financial Freedom Companion',
+    'VERSION': '1',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
 
 

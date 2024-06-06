@@ -3,8 +3,10 @@ from rest_framework.request import Request
 from rest_framework.views import APIView
 from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
-    ListCreateAPIView, UpdateAPIView, DestroyAPIView
+    ListCreateAPIView, UpdateAPIView, DestroyAPIView, GenericAPIView
 )
+
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 
 from django.utils import timezone
 from django.db.models import QuerySet, Model
@@ -72,5 +74,3 @@ class ReadUpdateDeleteOutflows(RetrieveUpdateDestroyOneBaseView):
 class ReadUpdateDeleteInflows(RetrieveUpdateDestroyOneBaseView):
     queryset = Inflow.objects.all()
     serializer_class = serializers.InflowFullSerializer
-
-
