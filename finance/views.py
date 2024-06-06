@@ -83,12 +83,12 @@ class ListPostInflows(ListPostOneBaseView):
     serializer_class = serializers.InflowListSerializer
 
 
-class ReadUpdateDeleteOutflows(GetPutDeleteOneBaseView):
+class GetPutDeleteOutflow(GetPutDeleteOneBaseView):
     queryset = Outflow.objects.all()
     serializer_class = serializers.OutflowFullSerializer
 
 
-class ReadUpdateDeleteInflows(GetPutDeleteOneBaseView):
+class GetPutDeleteInflow(GetPutDeleteOneBaseView):
     queryset = Inflow.objects.all()
     serializer_class = serializers.InflowFullSerializer
 

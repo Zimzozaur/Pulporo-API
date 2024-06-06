@@ -7,17 +7,17 @@ urlpatterns = [
     path('images/', views.ImagesURLs.as_view(), name='base'),
 
     # Actions on OneIO
-    path('outflows/', views.ListPostOutflows.as_view(), name='list-create-outflows'),
+    path('outflows/', views.ListPostOutflows.as_view(), name='list-post-outflow'),
     path(
         'outflows/<int:pk>/',
-        views.ReadUpdateDeleteOutflows.as_view(),
-        name='read-update-delete-outflows'
+        views.GetPutDeleteOutflow.as_view(),
+        name='get-put-delete-outflow'
     ),
 
-    path('inflows/', views.ListPostInflows.as_view(), name='list-create-inflows'),
+    path('inflows/', views.ListPostInflows.as_view(), name='list-post-inflow'),
     path(
         'inflows/<int:pk>/',
-        views.ReadUpdateDeleteOutflows.as_view(),
-        name='read-update-delete-inflows'
+        views.GetPutDeleteInflow.as_view(),
+        name='get-put-delete-inflow'
     ),
 ]
