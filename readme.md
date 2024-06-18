@@ -52,7 +52,7 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
      ```
    - **Windows (PowerShell):**
      ```powershell
-     \venv\Scripts\Activate.ps1
+     .\venv\Scripts\Activate.ps1
      ```
 5. Install dependencies from requirements.txt
    ```

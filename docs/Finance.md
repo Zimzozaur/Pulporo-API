@@ -1,0 +1,1 @@
+Finance is a main Pulporo app that create all basic models and returns them to user
