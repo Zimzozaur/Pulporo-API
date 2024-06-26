@@ -71,7 +71,7 @@ If you don't have Python 3.12 or SQLite installed on your system, follow these s
    ```
     python manage.py runserver
    ```
-9. Type in browser - http://127.0.0.1:8000/
+9. Open [Pulporo-TUI](https://github.com/Zimzozaur/Pulporo-TUI?tab=readme-ov-file#project-setup-under-1-min) in terminal
 
 ## Find a bug?
 
